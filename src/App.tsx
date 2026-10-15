@@ -33,7 +33,6 @@ import {
   CANDIDATE_PROFILE,
   CERTIFICATIONS,
   PROJECTS,
-  WORK_EXPERIENCE,
   EDUCATION_DATA,
   TECHNICAL_SKILLS,
   Project,
@@ -600,38 +599,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Experience Timeline */}
-            <div className="mt-16 pt-12 border-t border-white/5">
-              <h3 className="text-xl font-bold text-white mb-8">Professional Experience</h3>
-              <div className="space-y-8">
-                {WORK_EXPERIENCE.map((exp, idx) => (
-                  <div key={idx} className="glass-panel p-6 rounded-xl border border-white/5 hover:border-white/10 transition-colors">
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-3">
-                      <div>
-                        <span className="text-base font-semibold text-white">{exp.role}</span>
-                        <span className="text-slate-400 text-sm"> — {exp.organization}</span>
-                      </div>
-                      <div className="text-xs font-mono text-indigo-400">{exp.period} · {exp.location}</div>
-                    </div>
-                    <p className="text-sm text-slate-300 mb-4">{exp.description}</p>
-                    <ul className="space-y-2 mb-4">
-                      {exp.bullets.map((b, bIdx) => (
-                        <li key={bIdx} className="text-xs text-slate-400 flex items-start gap-2">
-                          <span className="text-indigo-400 mt-0.5">▹</span>
-                          <span>{b}</span>
-                        </li>
-                      ))}
-                    </ul>
-                    <div className="flex flex-wrap gap-2 text-xs text-slate-400 pt-2 border-t border-white/5">
-                      <span className="text-slate-500">Tech:</span>
-                      {exp.technologies.map((t, tIdx) => (
-                        <span key={tIdx} className="text-slate-300">{t}{tIdx < exp.technologies.length - 1 ? ' ·' : ''}</span>
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
           </div>
         </section>
 
