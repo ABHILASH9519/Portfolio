@@ -1678,29 +1678,6 @@ export default function App() {
               </div>
 
               <div>
-                <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-3">Professional Experience</h4>
-                <div className="space-y-4">
-                  {WORK_EXPERIENCE.map((exp, idx) => (
-                    <div key={idx} className="border-l-2 border-indigo-500/30 pl-4 space-y-1">
-                      <div className="flex justify-between text-xs">
-                        <span className="font-bold text-white">{exp.role} — {exp.organization}</span>
-                        <span className="text-slate-400">{exp.period}</span>
-                      </div>
-                      <p className="text-xs text-slate-300">{exp.description}</p>
-                      <ul className="space-y-1 pt-1">
-                        {exp.bullets.map((b, bIdx) => (
-                          <li key={bIdx} className="text-xs text-slate-400 flex items-start gap-1.5">
-                            <span className="text-indigo-400">▹</span>
-                            <span>{b}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div>
                 <h4 className="text-xs font-bold uppercase tracking-wider text-indigo-400 mb-2">Technical Proficiencies</h4>
                 <div className="text-xs text-slate-300 space-y-1">
                   <div><strong className="text-white">Cloud & Containers:</strong> Google Cloud Platform (GKE, Vertex AI), Microsoft Azure (AKS, Azure OpenAI), Docker, Kubernetes, Terraform</div>
