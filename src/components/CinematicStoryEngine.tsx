@@ -2,6 +2,10 @@ import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'motion/react';
 import { soundFx } from '../utils/audio';
 import { Orbit, Play, ArrowDown, ChevronDown } from 'lucide-react';
+import planetaryHeroImage from '../assets/images/edolus_planetary_hero_1791967604420.jpg';
+import cloudAiPlatformImage from '../assets/images/hero_cloud_ai_platform_1791967729104.jpg';
+import computeCoreImage from '../assets/images/edolus_compute_core_1791967674635.jpg';
+import carCockpitImage from '../assets/images/edolus_car_cockpit_1791967703166.jpg';
 
 interface CinematicStoryEngineProps {
   onInitiateSystem: () => void;
@@ -58,7 +62,7 @@ export const CinematicStoryEngine: React.FC<CinematicStoryEngineProps> = ({
             className="absolute inset-0 -z-10 overflow-hidden will-change-transform"
           >
             <img
-              src="/src/assets/images/edolus_planetary_hero_1791967604420.jpg"
+              src={planetaryHeroImage}
               alt="Planetary Scale - Intelligence from Edge of Atmosphere"
               className="w-full h-full object-cover object-center"
             />
@@ -121,7 +125,7 @@ export const CinematicStoryEngine: React.FC<CinematicStoryEngineProps> = ({
             className="absolute inset-0 -z-10 overflow-hidden will-change-transform"
           >
             <img
-              src="/src/assets/images/hero_cloud_ai_platform_1791967729104.jpg"
+              src={cloudAiPlatformImage}
               alt="Orbital Edge AI Nodes"
               className="w-full h-full object-cover filter brightness-90"
             />
@@ -169,7 +173,7 @@ export const CinematicStoryEngine: React.FC<CinematicStoryEngineProps> = ({
             className="absolute inset-0 -z-10 overflow-hidden will-change-transform"
           >
             <img
-              src="/src/assets/images/edolus_compute_core_1791967674635.jpg"
+              src={computeCoreImage}
               alt="Compute Core NVX Datacenter"
               className="w-full h-full object-cover"
             />
@@ -215,7 +219,7 @@ export const CinematicStoryEngine: React.FC<CinematicStoryEngineProps> = ({
             className="absolute inset-0 -z-10 overflow-hidden will-change-transform"
           >
             <img
-              src="/src/assets/images/edolus_car_cockpit_1791967703166.jpg"
+              src={carCockpitImage}
               alt="Autonomous Deployment Cockpit"
               className="w-full h-full object-cover"
             />

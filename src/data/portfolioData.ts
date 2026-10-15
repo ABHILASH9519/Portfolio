@@ -1,3 +1,10 @@
+import portraitPhoto from '../assets/images/abhilash_current.jpg';
+import awsBuilderQrCode from '../assets/images/tachyons-QR-Code.png';
+import genAiStudioImage from '../assets/images/project_genai_studio_1791967761930.jpg';
+import kubernetesCloudImage from '../assets/images/project_k8s_cloud_1791967799777.jpg';
+import cloudAiPlatformImage from '../assets/images/hero_cloud_ai_platform_1791967729104.jpg';
+import planetaryHeroImage from '../assets/images/edolus_planetary_hero_1791967604420.jpg';
+
 export interface ProjectMetric {
   label: string;
   value: string;
@@ -78,9 +85,9 @@ export const CANDIDATE_PROFILE = {
   discord: 'https://discord.com/users/abhilash_sharma',
   driveCertificatesUrl: 'https://drive.google.com/drive/folders/1fuoLPn7N7EWP_vgUtfDn56Ykh1rb-Okm?usp=sharing',
   status: 'Available for Immediate Senior / Staff Opportunities',
-  avatarPhoto: '/src/assets/images/abhilash_current.jpg',
+  avatarPhoto: portraitPhoto,
   awsBuilderUrl: 'https://community.aws/@tachyons',
-  awsBuilderQrCode: '/src/assets/images/tachyons-QR-Code.png',
+  awsBuilderQrCode,
   bio: 'Senior full-stack systems engineer and AI solutions architect with verified multi-cloud mastery across Google Cloud Platform (Vertex AI, GKE, Gemini API) and Microsoft Azure (Azure OpenAI, AI Search, Document Intelligence). Proven track record delivering production agentic pipelines, high-availability microservices, and kinetic motion-rich user experiences with zero layout shifts.',
   stats: [
     { label: 'Cloud & AI Certifications', value: '45+' },
@@ -258,7 +265,7 @@ export const PROJECTS: Project[] = [
       { label: 'Token Throughput', value: '38k t/s' },
       { label: 'Median Response Time', value: '142ms' }
     ],
-    image: '/src/assets/images/project_genai_studio_1791967761930.jpg',
+    image: genAiStudioImage,
     githubUrl: 'https://github.com/ABHILASH9519',
     architectureDiagram: 'Client React UI ⇄ Fast Gateway ⇄ Agent Orchestrator ⇄ Vertex AI / Azure Search ⇄ Vector DB Cache',
     systemBreakdown: {
@@ -287,7 +294,7 @@ export const PROJECTS: Project[] = [
       { label: 'Cross-Cloud Failover', value: '< 2.4s' },
       { label: 'Microservices Managed', value: '32 Services' }
     ],
-    image: '/src/assets/images/project_k8s_cloud_1791967799777.jpg',
+    image: kubernetesCloudImage,
     githubUrl: 'https://github.com/ABHILASH9519',
     architectureDiagram: 'Cloudflare Anycast ⇄ Multi-Region Load Balancer ⇄ GKE Cluster (US) + AKS Cluster (EU) ⇄ Distributed KV Store',
     systemBreakdown: {
@@ -316,7 +323,7 @@ export const PROJECTS: Project[] = [
       { label: 'Extraction Precision', value: '98.8%' },
       { label: 'Manual Effort Reduction', value: '82%' }
     ],
-    image: '/src/assets/images/hero_cloud_ai_platform_1791967729104.jpg',
+    image: cloudAiPlatformImage,
     githubUrl: 'https://github.com/ABHILASH9519',
     systemBreakdown: {
       overview: 'Manual processing of legal contracts and shipping manifests was bottlenecking warehouse turnaround times.',
@@ -344,7 +351,7 @@ export const PROJECTS: Project[] = [
       { label: 'Layout Shift (CLS)', value: '0.00' },
       { label: 'Interaction Latency', value: '< 8ms' }
     ],
-    image: '/src/assets/images/edolus_planetary_hero_1791967604420.jpg',
+    image: planetaryHeroImage,
     githubUrl: 'https://github.com/ABHILASH9519',
     systemBreakdown: {
       overview: 'Standing out on competitive hiring boards requires palpable proof of design craft, motion sensibility, and systems architecture.',
