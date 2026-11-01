@@ -1,4 +1,4 @@
-import portraitPhoto from '../assets/images/abhilash_current.jpg';
+import portraitPhoto from '../assets/images/file_00000000a8388208afeea3a8dc5f9e66.jpg';
 import awsBuilderQrCode from '../assets/images/tachyons-QR-Code.png';
 import genAiStudioImage from '../assets/images/project_genai_studio_1791967761930.jpg';
 import kubernetesCloudImage from '../assets/images/project_k8s_cloud_1791967799777.jpg';
