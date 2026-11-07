@@ -1019,35 +1019,36 @@ export default function App() {
           </div>
         </section>
 
-        {/* SECTION: STACK — ICON GRID */}
+        {/* SECTION: STACK — MATCHES THE GITHUB PROFILE README */}
         <section id="stack" className="py-20 border-b border-white/5">
           <div className="max-w-7xl mx-auto px-6">
             <div className="max-w-3xl mb-12">
-              <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2">03 — Stack</div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">The <span className="text-indigo-400">toolkit</span></h2>
-              <p className="mt-3 text-sm text-slate-400">Technologies, platforms, and tools I work with across the entire stack.</p>
+              <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2">04 — GitHub Tech Stack</div>
+              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">Tools I <span className="text-indigo-400">build with.</span></h2>
+              <p className="mt-3 text-sm text-slate-400">The same technology categories and tools listed on my GitHub profile, organised for a closer look.</p>
             </div>
 
-            <div className="space-y-8">
+            <div className="space-y-6">
               {[
                 {
-                  category: 'Programming Languages',
+                  category: '01 / Programming Languages',
                   tools: [
+                    { name: 'C', icon: 'https://cdn.simpleicons.org/c/A8B9CC' },
                     { name: 'C++', icon: 'https://cdn.simpleicons.org/cplusplus/00599C' },
                     { name: 'Go', icon: 'https://cdn.simpleicons.org/go/00ADD8' },
                     { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB' },
                     { name: 'Java', icon: 'https://cdn.simpleicons.org/openjdk/ED8B00' },
-                    { name: 'Bash', icon: 'https://cdn.simpleicons.org/gnubash/4EAA25' },
                     { name: 'Swift', icon: 'https://cdn.simpleicons.org/swift/F05138' },
+                    { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6' },
                     { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript/F7DF1E' },
-                    { name: 'HTML', icon: 'https://cdn.simpleicons.org/html5/E34F26' },
-                    { name: 'CSS', icon: 'https://cdn.simpleicons.org/css3/1572B6' },
+                    { name: 'Bash', icon: 'https://cdn.simpleicons.org/gnubash/4EAA25' },
+                    { name: 'PowerShell', icon: 'https://cdn.simpleicons.org/powershell/5391FE' },
                   ],
                 },
                 {
-                  category: 'Cloud & DevOps',
+                  category: '02 / Cloud & DevOps',
                   tools: [
-                    { name: 'AWS', icon: 'https://cdn.simpleicons.org/amazonwebservices/FF9900' },
+                    { name: 'AWS', icon: 'https://cdn.simpleicons.org/amazonaws/FF9900' },
                     { name: 'Azure', icon: 'https://cdn.simpleicons.org/microsoftazure/0078D4' },
                     { name: 'Google Cloud', icon: 'https://cdn.simpleicons.org/googlecloud/4285F4' },
                     { name: 'Docker', icon: 'https://cdn.simpleicons.org/docker/2496ED' },
@@ -1055,79 +1056,146 @@ export default function App() {
                     { name: 'Terraform', icon: 'https://cdn.simpleicons.org/terraform/7B42BC' },
                     { name: 'Jenkins', icon: 'https://cdn.simpleicons.org/jenkins/D24939' },
                     { name: 'GitHub Actions', icon: 'https://cdn.simpleicons.org/githubactions/2088FF' },
+                    { name: 'GitLab', icon: 'https://cdn.simpleicons.org/gitlab/FC6D26' },
                     { name: 'Ansible', icon: 'https://cdn.simpleicons.org/ansible/EE0000' },
                     { name: 'Nginx', icon: 'https://cdn.simpleicons.org/nginx/009639' },
+                    { name: 'Cloudflare', icon: 'https://cdn.simpleicons.org/cloudflare/F38020' },
+                    { name: 'Vercel', icon: 'https://cdn.simpleicons.org/vercel/FFFFFF' },
+                    { name: 'Netlify', icon: 'https://cdn.simpleicons.org/netlify/00C7B7' },
+                    { name: 'Argo CD', icon: 'https://cdn.simpleicons.org/argo/EF7B4D' },
+                    { name: 'Helm', icon: 'https://cdn.simpleicons.org/helm/0F1689' },
+                    { name: 'Istio', icon: 'https://cdn.simpleicons.org/istio/466BB0' },
+                    { name: 'Vault', icon: 'https://cdn.simpleicons.org/vault/FFEC6E' },
+                    { name: 'Pulumi', icon: 'https://cdn.simpleicons.org/pulumi/8A3391' },
+                    { name: 'SonarQube', icon: 'https://cdn.simpleicons.org/sonarqube/4E9BCD' },
+                    { name: 'Trivy', icon: 'https://cdn.simpleicons.org/aquasecurity/1904DA' },
                   ],
                 },
                 {
-                  category: 'Databases & Messaging',
+                  category: '03 / AI, ML & Agentic AI',
+                  tools: [
+                    { name: 'PyTorch', icon: 'https://cdn.simpleicons.org/pytorch/EE4C2C' },
+                    { name: 'TensorFlow', icon: 'https://cdn.simpleicons.org/tensorflow/FF6F00' },
+                    { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688' },
+                    { name: 'Flask', icon: 'https://cdn.simpleicons.org/flask/FFFFFF' },
+                    { name: 'LangChain', icon: 'https://cdn.simpleicons.org/langchain/1C3C3C' },
+                    { name: 'LangGraph', icon: 'https://cdn.simpleicons.org/langgraph/1C3C3C' },
+                    { name: 'Hugging Face', icon: 'https://cdn.simpleicons.org/huggingface/FFD21E' },
+                    { name: 'Anthropic Claude', icon: 'https://cdn.simpleicons.org/anthropic/D97757' },
+                    { name: 'MCP', icon: 'https://cdn.simpleicons.org/modelcontextprotocol/FFFFFF' },
+                    { name: 'RAG', icon: 'https://cdn.simpleicons.org/openai/FFFFFF' },
+                    { name: 'MLflow', icon: 'https://cdn.simpleicons.org/mlflow/0194E2' },
+                    { name: 'Ollama', icon: 'https://cdn.simpleicons.org/ollama/FFFFFF' },
+                    { name: 'Vector DBs', icon: 'https://cdn.simpleicons.org/chroma/FFFFFF' },
+                  ],
+                },
+                {
+                  category: '04 / Databases & Messaging',
                   tools: [
                     { name: 'MySQL', icon: 'https://cdn.simpleicons.org/mysql/4479A1' },
                     { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1' },
                     { name: 'MongoDB', icon: 'https://cdn.simpleicons.org/mongodb/47A248' },
                     { name: 'Redis', icon: 'https://cdn.simpleicons.org/redis/DC382D' },
-                    { name: 'Kafka', icon: 'https://cdn.simpleicons.org/apachekafka/231F20' },
+                    { name: 'Kafka', icon: 'https://cdn.simpleicons.org/apachekafka/FFFFFF' },
+                    { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57' },
+                    { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E' },
+                    { name: 'Firebase', icon: 'https://cdn.simpleicons.org/firebase/FFCA28' },
+                    { name: 'Elasticsearch', icon: 'https://cdn.simpleicons.org/elasticsearch/005571' },
+                    { name: 'RabbitMQ', icon: 'https://cdn.simpleicons.org/rabbitmq/FF6600' },
                   ],
                 },
                 {
-                  category: 'Backend & Web Development',
+                  category: '05 / Backend & Web Development',
                   tools: [
                     { name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/339933' },
+                    { name: 'Express', icon: 'https://cdn.simpleicons.org/express/FFFFFF' },
                     { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688' },
-                    { name: 'Flask', icon: 'https://cdn.simpleicons.org/flask/000000' },
                     { name: 'Django', icon: 'https://cdn.simpleicons.org/django/092E20' },
+                    { name: 'Spring', icon: 'https://cdn.simpleicons.org/spring/6DB33F' },
+                    { name: 'GraphQL', icon: 'https://cdn.simpleicons.org/graphql/E10098' },
+                    { name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB' },
+                    { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/FFFFFF' },
                     { name: 'Angular', icon: 'https://cdn.simpleicons.org/angular/DD0031' },
-                    { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/000000' },
+                    { name: 'Vue', icon: 'https://cdn.simpleicons.org/vuedotjs/4FC08D' },
+                    { name: 'Vite', icon: 'https://cdn.simpleicons.org/vite/646CFF' },
+                    { name: 'Tailwind CSS', icon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4' },
                     { name: 'Bootstrap', icon: 'https://cdn.simpleicons.org/bootstrap/7952B3' },
+                    { name: 'HTML', icon: 'https://cdn.simpleicons.org/html5/E34F26' },
+                    { name: 'CSS', icon: 'https://cdn.simpleicons.org/css3/1572B6' },
                   ],
                 },
                 {
-                  category: 'Version Control, Build & Testing',
+                  category: '06 / Version Control, Build & Testing',
                   tools: [
                     { name: 'Git', icon: 'https://cdn.simpleicons.org/git/F05032' },
-                    { name: 'GitHub', icon: 'https://cdn.simpleicons.org/github/181717' },
+                    { name: 'GitHub', icon: 'https://cdn.simpleicons.org/github/FFFFFF' },
                     { name: 'GitLab', icon: 'https://cdn.simpleicons.org/gitlab/FC6D26' },
                     { name: 'Maven', icon: 'https://cdn.simpleicons.org/apachemaven/C71A36' },
                     { name: 'Gradle', icon: 'https://cdn.simpleicons.org/gradle/02303A' },
                     { name: 'npm', icon: 'https://cdn.simpleicons.org/npm/CB3837' },
                     { name: 'Postman', icon: 'https://cdn.simpleicons.org/postman/FF6C37' },
                     { name: 'Selenium', icon: 'https://cdn.simpleicons.org/selenium/43B02A' },
+                    { name: 'Jest', icon: 'https://cdn.simpleicons.org/jest/C21325' },
+                    { name: 'Pytest', icon: 'https://cdn.simpleicons.org/pytest/0A9EDC' },
                   ],
                 },
                 {
-                  category: 'Monitoring, IaC & Automation',
+                  category: '07 / Monitoring, IaC & Automation',
                   tools: [
                     { name: 'Prometheus', icon: 'https://cdn.simpleicons.org/prometheus/E6522C' },
                     { name: 'Grafana', icon: 'https://cdn.simpleicons.org/grafana/F46800' },
+                    { name: 'Terraform', icon: 'https://cdn.simpleicons.org/terraform/7B42BC' },
+                    { name: 'Ansible', icon: 'https://cdn.simpleicons.org/ansible/EE0000' },
+                    { name: 'Bash', icon: 'https://cdn.simpleicons.org/gnubash/4EAA25' },
+                    { name: 'Datadog', icon: 'https://cdn.simpleicons.org/datadog/632CA6' },
+                    { name: 'OpenTelemetry', icon: 'https://cdn.simpleicons.org/opentelemetry/FFFFFF' },
+                    { name: 'Loki', icon: 'https://cdn.simpleicons.org/grafana/F46800' },
+                    { name: 'ELK', icon: 'https://cdn.simpleicons.org/elastic/005571' },
                   ],
                 },
                 {
-                  category: 'Operating Systems & Virtualization',
+                  category: '08 / Operating Systems & Virtualization',
                   tools: [
                     { name: 'Linux', icon: 'https://cdn.simpleicons.org/linux/FCC624' },
                     { name: 'Ubuntu', icon: 'https://cdn.simpleicons.org/ubuntu/E95420' },
                     { name: 'Kali Linux', icon: 'https://cdn.simpleicons.org/kalilinux/557C94' },
                     { name: 'Arch Linux', icon: 'https://cdn.simpleicons.org/archlinux/1793D1' },
+                    { name: 'Debian', icon: 'https://cdn.simpleicons.org/debian/A81D33' },
+                    { name: 'macOS', icon: 'https://cdn.simpleicons.org/apple/FFFFFF' },
+                    { name: 'Windows', icon: 'https://cdn.simpleicons.org/windows/0078D6' },
+                    { name: 'VMware', icon: 'https://cdn.simpleicons.org/vmware/607078' },
                   ],
                 },
                 {
-                  category: 'Dev Tools & Platforms',
+                  category: '09 / Development Tools & Platforms',
                   tools: [
                     { name: 'VS Code', icon: 'https://cdn.simpleicons.org/visualstudiocode/007ACC' },
-                    { name: 'IntelliJ IDEA', icon: 'https://cdn.simpleicons.org/intellijidea/000000' },
-                    { name: 'WebStorm', icon: 'https://cdn.simpleicons.org/webstorm/000000' },
+                    { name: 'IntelliJ IDEA', icon: 'https://cdn.simpleicons.org/intellijidea/FFFFFF' },
+                    { name: 'WebStorm', icon: 'https://cdn.simpleicons.org/webstorm/FFFFFF' },
                     { name: 'Android Studio', icon: 'https://cdn.simpleicons.org/androidstudio/3DDC84' },
-                    { name: 'Firebase', icon: 'https://cdn.simpleicons.org/firebase/FFCA28' },
+                    { name: 'Flutter', icon: 'https://cdn.simpleicons.org/flutter/02569B' },
+                    { name: 'Vim', icon: 'https://cdn.simpleicons.org/vim/019733' },
+                    { name: 'Neovim', icon: 'https://cdn.simpleicons.org/neovim/57A143' },
+                    { name: 'Figma', icon: 'https://cdn.simpleicons.org/figma/F24E1E' },
                     { name: 'MATLAB', icon: 'https://cdn.simpleicons.org/mathworks/0076A8' },
+                    { name: 'Photoshop', icon: 'https://cdn.simpleicons.org/adobephotoshop/31A8FF' },
+                    { name: 'Postman', icon: 'https://cdn.simpleicons.org/postman/FF6C37' },
+                    { name: 'Markdown', icon: 'https://cdn.simpleicons.org/markdown/FFFFFF' },
+                    { name: 'GoLand', icon: 'https://cdn.simpleicons.org/goland/FFFFFF' },
+                    { name: 'Anaconda', icon: 'https://cdn.simpleicons.org/anaconda/44A833' },
+                    { name: 'Firebase', icon: 'https://cdn.simpleicons.org/firebase/FFCA28' },
+                    { name: 'Ollama', icon: 'https://cdn.simpleicons.org/ollama/FFFFFF' },
+                    { name: 'macOS', icon: 'https://cdn.simpleicons.org/apple/FFFFFF' },
+                    { name: 'ngrok', icon: 'https://cdn.simpleicons.org/ngrok/1F1E37' },
+                    { name: 'Termius', icon: 'https://cdn.simpleicons.org/termius/FFFFFF' },
                   ],
                 },
                 {
-                  category: 'AI & Automation',
+                  category: '10 / Collaboration & Project Management',
                   tools: [
-                    { name: 'Claude', icon: 'https://cdn.simpleicons.org/anthropic/D97757' },
-                    { name: 'Gemini', icon: 'https://cdn.simpleicons.org/googlegemini/8E75B2' },
-                    { name: 'n8n', icon: 'https://cdn.simpleicons.org/n8n/EA4B71' },
-                    { name: 'LangChain', icon: 'https://cdn.simpleicons.org/langchain/1C3C3C' },
+                    { name: 'Atlassian', icon: 'https://cdn.simpleicons.org/atlassian/0052CC' },
+                    { name: 'Jira', icon: 'https://cdn.simpleicons.org/jira/0052CC' },
+                    { name: 'Slack', icon: 'https://cdn.simpleicons.org/slack/4A154B' },
                   ],
                 },
               ].map((row, rIdx) => (
@@ -1152,7 +1220,7 @@ export default function App() {
                             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                           />
                         </div>
-                        <span className="text-[10px] text-slate-500 group-hover:text-slate-300 transition-colors text-center leading-tight max-w-[52px]">{tool.name}</span>
+                        <span className="text-[10px] text-slate-500 group-hover:text-slate-300 transition-colors text-center leading-tight max-w-[64px]">{tool.name}</span>
                       </div>
                     ))}
                   </div>
@@ -1160,11 +1228,10 @@ export default function App() {
               ))}
             </div>
 
-            {/* Core Areas */}
             <div className="mt-10 glass-panel p-6 rounded-2xl border border-white/5">
-              <div className="text-xs font-mono text-indigo-400 mb-4 uppercase tracking-wider">Core Areas</div>
+              <div className="text-xs font-mono text-indigo-400 mb-4 uppercase tracking-wider">Focus Areas</div>
               <div className="flex flex-wrap gap-2">
-                {['Software Engineering', 'Cloud & DevOps', 'Automation', 'Distributed Systems', 'Infrastructure as Code', 'Kubernetes', 'System Design', 'Networking', 'AI / ML', 'Agentic AI', 'Platform Engineering'].map((area, i) => (
+                {['Cloud Engineering', 'DevOps & Platform Engineering', 'Infrastructure as Code', 'Automation', 'Distributed Systems', 'Backend Development', 'Generative AI', 'Agentic AI', 'MLOps', 'Cybersecurity', 'Web3'].map((area, i) => (
                   <span key={i} className="px-3 py-1 text-xs font-medium text-slate-300 bg-white/5 border border-white/10 rounded-full hover:border-indigo-500/40 hover:text-indigo-300 transition-colors">
                     {area}
                   </span>
