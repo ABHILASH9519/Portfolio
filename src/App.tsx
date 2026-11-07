@@ -948,7 +948,7 @@ export default function App() {
                   className="w-full py-3 px-4 bg-indigo-600 hover:bg-indigo-500 disabled:opacity-50 text-white font-semibold text-xs rounded-lg transition-all shadow-lg shadow-indigo-600/20 flex items-center justify-center gap-2 active:scale-95"
                 >
                   <Zap className="w-4 h-4" />
-                  <span>{playgroundSimulating ? 'Executing Architecture Simulation...' : 'Simulate Distributed Runtime'}</span>
+                  <span>{playgroundSimulating ? 'Running local scenario...' : 'Run illustrative scenario'}</span>
                 </button>
               </div>
 
@@ -958,7 +958,7 @@ export default function App() {
                   <div className="flex items-center justify-between pb-3 mb-4 border-b border-white/10 text-slate-400">
                     <div className="flex items-center gap-2">
                       <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
-                      <span className="text-white font-medium">SIMULATION ENGINE v2.5</span>
+                      <span className="text-white font-medium">LOCAL SCENARIO PREVIEW</span>
                     </div>
                     <span>TOPOLOGY: {playgroundCloudProvider.toUpperCase()}</span>
                   </div>
@@ -978,8 +978,8 @@ export default function App() {
 
                   {!playgroundSimulating && playgroundOutput && (
                     <div className="space-y-4">
-                      {/* Telemetry KPIs */}
-                      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-white/[0.02] p-3 rounded-lg border border-white/5">
+                      {/* Illustrative scenario values — not live measurements. */}
+                      <div className="space-y-2"><p className="text-[10px] uppercase tracking-[0.16em] text-amber-300">Illustrative output · not live infrastructure telemetry</p><div className="grid grid-cols-2 sm:grid-cols-4 gap-3 bg-white/[0.02] p-3 rounded-lg border border-white/5">
                         <div>
                           <div className="text-slate-400 text-[10px] uppercase">Latency</div>
                           <div className="text-sm font-bold text-emerald-400 tabular-nums">{playgroundOutput.latency}</div>
@@ -996,7 +996,7 @@ export default function App() {
                           <div className="text-slate-400 text-[10px] uppercase">Economics</div>
                           <div className="text-xs font-bold text-amber-300 truncate">{playgroundOutput.costEstimate.split(' ')[0]}</div>
                         </div>
-                      </div>
+                      </div></div>
 
                       {/* Log Output */}
                       <div className="space-y-1.5 pt-2">
@@ -1012,7 +1012,7 @@ export default function App() {
 
                 <div className="pt-4 mt-6 border-t border-white/5 text-[11px] text-slate-500 flex items-center justify-between">
                   <span>Compliant with Google Cloud & Azure Well-Architected Frameworks</span>
-                  <span className="text-emerald-400">STATUS: READY</span>
+                  <span className="text-amber-300">MODE: LOCAL DEMO</span>
                 </div>
               </div>
             </div>
