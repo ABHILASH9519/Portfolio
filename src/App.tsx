@@ -972,7 +972,7 @@ export default function App() {
 
                   {!playgroundSimulating && !playgroundOutput && (
                     <div className="py-12 text-center text-slate-500">
-                      Click "Simulate Distributed Runtime" to trigger end-to-end telemetry probe.
+                      Run a local walkthrough to see an illustrative architecture trace. No cloud resources are provisioned and no live telemetry is collected.
                     </div>
                   )}
 
@@ -1011,7 +1011,7 @@ export default function App() {
                 </div>
 
                 <div className="pt-4 mt-6 border-t border-white/5 text-[11px] text-slate-500 flex items-center justify-between">
-                  <span>Compliant with Google Cloud & Azure Well-Architected Frameworks</span>
+                  <span>Illustrative walkthrough · no cloud resources provisioned</span>
                   <span className="text-amber-300">MODE: LOCAL DEMO</span>
                 </div>
               </div>
