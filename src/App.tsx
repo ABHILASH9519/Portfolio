@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import {
   Download,
   Mail,
@@ -27,7 +27,7 @@ import {
   CheckCircle2,
   QrCode
 } from 'lucide-react';
-import { motion, useScroll, useSpring } from 'motion/react';
+import { AnimatePresence, motion, useMotionTemplate, useScroll, useSpring, useTransform } from 'motion/react';
 import confetti from 'canvas-confetti';
 import {
   CANDIDATE_PROFILE,
@@ -44,9 +44,18 @@ import { KineticCursor } from './components/KineticCursor';
 import { KineticMarquee } from './components/KineticMarquee';
 import { Interactive3DCard } from './components/Interactive3DCard';
 import { CinematicStoryEngine } from './components/CinematicStoryEngine';
+import { Reveal, SplitHeading } from './components/Reveal';
+import { Magnetic } from './components/Magnetic';
+import { AnimatedCounter } from './components/AnimatedCounter';
+import { SkillBar } from './components/SkillBar';
+import { TechIcon } from './components/TechIcon';
+import { DesktopNav, MobileMenu, useActiveSection } from './components/SiteNav';
+import { useLenis } from './components/SmoothScroll';
 
 export default function App() {
   const dossierRef = useRef<HTMLDivElement>(null);
+  const lenis = useLenis();
+  const activeSection = useActiveSection();
 
   // Motion scroll progress bar
   const { scrollYProgress } = useScroll();
@@ -55,6 +64,11 @@ export default function App() {
     damping: 30,
     restDelta: 0.001
   });
+
+  // Header glass thickens as the page scrolls
+  const { scrollY } = useScroll();
+  const headerAlpha = useTransform(scrollY, [0, 160], [0.4, 0.9]);
+  const headerBg = useMotionTemplate`rgba(9, 11, 16, ${headerAlpha})`;
 
   // Sound toggle state
   const [audioEnabled, setAudioEnabled] = useState(true);
@@ -74,6 +88,29 @@ export default function App() {
   const [awsQrModalOpen, setAwsQrModalOpen] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
+
+  // Modals: lock page scroll while open, close on Escape
+  const anyModalOpen = Boolean(selectedProject || selectedCert || resumeModalOpen || awsQrModalOpen);
+  useEffect(() => {
+    if (!anyModalOpen) return;
+    if (lenis) lenis.stop();
+    else document.documentElement.style.overflow = 'hidden';
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key !== 'Escape') return;
+      setSelectedProject(null);
+      setSelectedCert(null);
+      setResumeModalOpen(false);
+      setAwsQrModalOpen(false);
+    };
+    window.addEventListener('keydown', onKey);
+
+    return () => {
+      if (lenis) lenis.start();
+      else document.documentElement.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [anyModalOpen, lenis]);
 
   // Interactive Playground state
   const [playgroundAgentTask, setPlaygroundAgentTask] = useState('Build an enterprise RAG microservice with semantic caching and Vertex AI');
@@ -96,27 +133,13 @@ export default function App() {
   const scrollToDossier = () => {
     soundFx.playPop();
     if (!dossierRef.current) return;
-    const targetY = dossierRef.current.getBoundingClientRect().top + window.pageYOffset;
-    const startY = window.pageYOffset;
-    const distance = targetY - startY;
-    const duration = 1200; // 1.2s luxurious smooth scroll
-    let startTimestamp: number | null = null;
+    if (lenis) lenis.scrollTo(dossierRef.current, { offset: -64, duration: 1.6 });
+    else dossierRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
+  };
 
-    const easeInOutCubic = (t: number) =>
-      t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
-
-    const step = (timestamp: number) => {
-      if (!startTimestamp) startTimestamp = timestamp;
-      const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-      const easedProgress = easeInOutCubic(progress);
-      window.scrollTo(0, startY + distance * easedProgress);
-
-      if (progress < 1) {
-        window.requestAnimationFrame(step);
-      }
-    };
-
-    window.requestAnimationFrame(step);
+  const scrollToTop = () => {
+    if (lenis) lenis.scrollTo(0, { duration: 1.8 });
+    else window.scrollTo(0, 0);
   };
 
   const toggleAudio = () => {
@@ -206,19 +229,35 @@ export default function App() {
 
       {/* Ambient background blur circles */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute top-[-10%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-indigo-900/10 blur-[130px]" />
-        <div className="absolute top-[35%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-blue-900/10 blur-[150px]" />
-        <div className="absolute bottom-[-10%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-purple-900/5 blur-[160px]" />
+        <motion.div
+          animate={{ x: [0, 70, -35, 0], y: [0, 50, -25, 0] }}
+          transition={{ duration: 26, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-[-10%] left-[-10%] w-[45vw] h-[45vw] rounded-full bg-indigo-900/10 blur-[130px]"
+        />
+        <motion.div
+          animate={{ x: [0, -60, 30, 0], y: [0, 70, -35, 0] }}
+          transition={{ duration: 32, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute top-[35%] right-[-5%] w-[40vw] h-[40vw] rounded-full bg-blue-900/10 blur-[150px]"
+        />
+        <motion.div
+          animate={{ x: [0, 80, -40, 0], y: [0, -40, 20, 0] }}
+          transition={{ duration: 38, repeat: Infinity, ease: 'easeInOut' }}
+          className="absolute bottom-[-10%] left-[20%] w-[50vw] h-[50vw] rounded-full bg-purple-900/5 blur-[160px]"
+        />
       </div>
 
       {/* TOP BAR: Brand wordmark | Navigation links | Audio and CV CTA */}
-      <header className="sticky top-0 z-50 w-full bg-[#090b10]/85 backdrop-blur-md border-b border-white/5 transition-all">
+      <motion.header style={{ backgroundColor: headerBg }} className="sticky top-0 z-50 w-full backdrop-blur-md border-b border-white/5">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between gap-8">
           {/* Zone 1: Brand Wordmark */}
           <a
             href="#hero"
             onMouseEnter={() => soundFx.playHover()}
-            onClick={() => soundFx.playPop()}
+            onClick={(e) => {
+              e.preventDefault();
+              soundFx.playPop();
+              scrollToTop();
+            }}
             className="text-lg font-bold tracking-tight text-white hover:text-indigo-400 transition-colors whitespace-nowrap shrink-0 flex items-center gap-2.5 group"
           >
             <span className="w-2.5 h-2.5 rounded-sm bg-indigo-500 group-hover:rotate-45 transition-transform" />
@@ -226,57 +265,7 @@ export default function App() {
           </a>
 
           {/* Zone 2: Navigation Links */}
-          <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-400">
-            <a
-              href="#about"
-              onMouseEnter={() => soundFx.playHover()}
-              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
-            >
-              Background
-            </a>
-            <a
-              href="#academics"
-              onMouseEnter={() => soundFx.playHover()}
-              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
-            >
-              Academics
-            </a>
-            <a
-              href="#projects"
-              onMouseEnter={() => soundFx.playHover()}
-              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
-            >
-              Works
-            </a>
-            <a
-              href="#certifications"
-              onMouseEnter={() => soundFx.playHover()}
-              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
-            >
-              Credentials
-            </a>
-            <a
-              href="#stack"
-              onMouseEnter={() => soundFx.playHover()}
-              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
-            >
-              Stack
-            </a>
-            <a
-              href="#architecture"
-              onMouseEnter={() => soundFx.playHover()}
-              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
-            >
-              Playground
-            </a>
-            <a
-              href="#contact"
-              onMouseEnter={() => soundFx.playHover()}
-              className="hover:text-white transition-colors whitespace-nowrap shrink-0"
-            >
-              Contact
-            </a>
-          </nav>
+          <DesktopNav active={activeSection} onHoverItem={() => soundFx.playHover()} />
 
           {/* Zone 3: Audio Toggle + Primary Action */}
           <div className="flex items-center gap-3 shrink-0">
@@ -293,14 +282,17 @@ export default function App() {
                 soundFx.playPop();
                 setResumeModalOpen(true);
               }}
+              aria-label="Inspect CV"
               className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 rounded-lg hover:bg-indigo-500 active:scale-[0.98] transition-all whitespace-nowrap shrink-0 flex items-center gap-2 shadow-lg shadow-indigo-600/20"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Inspect CV</span>
+              <span className="hidden sm:inline">Inspect CV</span>
             </button>
+
+            <MobileMenu active={activeSection} />
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* ================= THE EDOLUS AWWWARDS SCROLLING MOTION ENGINE ================= */}
       <CinematicStoryEngine onInitiateSystem={scrollToDossier} />
@@ -314,8 +306,9 @@ export default function App() {
               {/* Left Column: Typographic Hierarchy */}
               <motion.div
                 initial={{ opacity: 0, y: 24 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-7 flex flex-col justify-center space-y-6"
               >
                 <div className="flex flex-wrap items-center gap-2 text-xs font-medium text-indigo-400 uppercase tracking-wider">
@@ -326,9 +319,13 @@ export default function App() {
                   <span>Full-Stack Cloud Architect</span>
                 </div>
 
-                <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.08] [text-wrap:balance]">
-                  Building kinetic AI agent runtimes and high-availability cloud fabrics.
-                </h1>
+                <SplitHeading
+                  as="h1"
+                  text="Building kinetic AI agent runtimes and high-availability cloud fabrics."
+                  accentWords={3}
+                  accentClassName="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-sky-400 to-emerald-300"
+                  className="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-[1.08] [text-wrap:balance]"
+                />
 
                 <p className="text-base sm:text-lg text-slate-300 leading-relaxed max-w-2xl font-normal">
                   {CANDIDATE_PROFILE.tagline} Verified expertise across Vertex AI, Azure OpenAI, multi-cloud Kubernetes, and React 19 motion interfaces.
@@ -399,11 +396,26 @@ export default function App() {
 
               {/* Right Column: Visual Container with 3D Tilt */}
               <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.7, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+                initial={{ opacity: 0, scale: 0.94, y: 30 }}
+                whileInView={{ opacity: 1, scale: 1, y: 0 }}
+                viewport={{ once: true, margin: '0px 0px -10% 0px' }}
+                transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
                 className="lg:col-span-5 relative"
               >
+                {/* Floating tech chips drifting around the portrait */}
+                <div className="hidden sm:flex float-slow absolute -left-5 top-32 z-30 items-center gap-2 px-3 py-2 rounded-xl glass-panel border border-indigo-500/30 shadow-xl shadow-indigo-500/10 text-xs font-medium text-slate-100 pointer-events-none">
+                  <Cpu className="w-3.5 h-3.5 text-indigo-400" />
+                  <span>Vertex AI · Gemini</span>
+                </div>
+                <div className="hidden sm:flex float-slower absolute -right-4 top-1/2 z-30 items-center gap-2 px-3 py-2 rounded-xl glass-panel border border-sky-500/30 shadow-xl shadow-sky-500/10 text-xs font-medium text-slate-100 pointer-events-none">
+                  <Cloud className="w-3.5 h-3.5 text-sky-400" />
+                  <span>GKE · AKS · Terraform</span>
+                </div>
+                <div className="hidden sm:flex float-slow absolute -left-4 bottom-36 z-30 items-center gap-2 px-3 py-2 rounded-xl glass-panel border border-emerald-500/30 shadow-xl shadow-emerald-500/10 text-xs font-medium text-slate-100 pointer-events-none">
+                  <Code2 className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>React 19 · Motion</span>
+                </div>
+
                 <Interactive3DCard className="rounded-2xl p-2 glass-panel shadow-2xl">
                   <div className="relative aspect-square w-full rounded-xl overflow-hidden bg-slate-900 group">
                     {/* Floating AWS Builder QR Pill */}
@@ -458,18 +470,19 @@ export default function App() {
             {/* Proof Metrics Strip with Tabular Figures */}
             <div className="mt-16 pt-10 border-t border-white/5 grid grid-cols-2 md:grid-cols-4 gap-6">
               {CANDIDATE_PROFILE.stats.map((stat, idx) => (
+                <Reveal key={idx} delay={idx * 0.08} className="h-full">
                 <div
-                  key={idx}
                   onMouseEnter={() => soundFx.playHover()}
-                  className="p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 transition-colors"
+                  className="p-4 rounded-xl bg-white/[0.02] border border-white/5 hover:border-indigo-500/30 transition-colors h-full"
                 >
                   <div className="text-3xl lg:text-4xl font-extrabold text-white tracking-tight font-mono tabular-nums">
-                    {stat.value}
+                    <AnimatedCounter value={stat.value} />
                   </div>
                   <div className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">
                     {stat.label}
                   </div>
                 </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -493,25 +506,23 @@ export default function App() {
         {/* SECTION: ACADEMIC EXCELLENCE (Grade 12: 93%, Grade 10: 97%) */}
         <section id="academics" className="py-20 border-b border-white/5 bg-white/[0.01]">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mb-12">
+            <Reveal y={22} className="max-w-3xl mb-12">
               <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <GraduationCap className="w-4 h-4" />
                 <span>Scholastic Track Record</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                Academic foundation of rigor & excellence.
-              </h2>
+              <SplitHeading text={"Academic foundation of rigor & excellence."} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
               <p className="mt-3 text-slate-300 text-sm leading-relaxed">
                 Demonstrated high-percentile intellectual consistency across secondary and senior secondary examinations prior to specializing in advanced distributed cloud computing and artificial intelligence.
               </p>
-            </div>
+            </Reveal>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {EDUCATION_DATA.map((edu, idx) => (
+                <Reveal key={idx} delay={idx * 0.12} className="h-full">
                 <div
-                  key={idx}
                   onMouseEnter={() => soundFx.playHover()}
-                  className="glass-panel p-8 rounded-2xl border border-white/5 space-y-4 hover:border-indigo-500/30 transition-all relative overflow-hidden group"
+                  className="glass-panel p-8 rounded-2xl border border-white/5 space-y-4 hover:border-indigo-500/30 transition-all relative overflow-hidden group h-full"
                 >
                   <div className="absolute top-0 right-0 p-6">
                     <span className="text-2xl font-black font-mono text-emerald-400 bg-emerald-950/40 border border-emerald-500/30 px-3 py-1 rounded-lg tabular-nums">
@@ -545,6 +556,7 @@ export default function App() {
                     ))}
                   </div>
                 </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -553,20 +565,19 @@ export default function App() {
         {/* SECTION: CANDIDATE BACKGROUND & ARCHITECTURAL PILLARS */}
         <section id="about" className="py-20 border-b border-white/5">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mb-12">
+            <Reveal y={22} className="max-w-3xl mb-12">
               <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2">
                 Engineering Discipline & Philosophy
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                Architectural rigor across the entire stack.
-              </h2>
+              <SplitHeading text={"Architectural rigor across the entire stack."} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
               <p className="mt-4 text-base text-slate-300 leading-relaxed">
                 Rather than treating AI as a black box or cloud platforms as an afterthought, I synthesize software design, container orchestration, and model inference into unified, resilient production systems.
               </p>
-            </div>
+            </Reveal>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="glass-panel p-8 rounded-2xl space-y-4 hover:border-indigo-500/30 transition-colors">
+              <Reveal delay={0} className="h-full">
+              <div className="glass-panel p-8 rounded-2xl space-y-4 hover:border-indigo-500/30 transition-colors h-full">
                 <div className="w-10 h-10 rounded-lg bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400">
                   <Cpu className="w-5 h-5" />
                 </div>
@@ -578,8 +589,10 @@ export default function App() {
                   Focus: Low-latency inference · Schema enforcement · Hallucination reduction
                 </div>
               </div>
+              </Reveal>
 
-              <div className="glass-panel p-8 rounded-2xl space-y-4 hover:border-blue-500/30 transition-colors">
+              <Reveal delay={0.1} className="h-full">
+              <div className="glass-panel p-8 rounded-2xl space-y-4 hover:border-blue-500/30 transition-colors h-full">
                 <div className="w-10 h-10 rounded-lg bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400">
                   <Cloud className="w-5 h-5" />
                 </div>
@@ -591,8 +604,10 @@ export default function App() {
                   Focus: High availability · Multi-cloud failover · FinOps cost optimization
                 </div>
               </div>
+              </Reveal>
 
-              <div className="glass-panel p-8 rounded-2xl space-y-4 hover:border-emerald-500/30 transition-colors">
+              <Reveal delay={0.2} className="h-full">
+              <div className="glass-panel p-8 rounded-2xl space-y-4 hover:border-emerald-500/30 transition-colors h-full">
                 <div className="w-10 h-10 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400">
                   <Code2 className="w-5 h-5" />
                 </div>
@@ -604,6 +619,7 @@ export default function App() {
                   Focus: Web vitals 100/100 · Kinetic cursor · Audio synthesizer feedback
                 </div>
               </div>
+              </Reveal>
             </div>
 
           </div>
@@ -612,21 +628,19 @@ export default function App() {
         {/* SECTION: SELECTED WORK / CASE STUDIES */}
         <section id="projects" className="py-20 border-b border-white/5">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <Reveal y={22} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
               <div>
                 <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2">
                   Featured Case Studies & Systems
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                  Engineered for real-world impact.
-                </h2>
+                <SplitHeading text={"Engineered for real-world impact."} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
                 <p className="text-slate-400 text-sm mt-2 max-w-xl">
                   Deep dives into production architectures, technical challenges overcome, and measurable performance metrics.
                 </p>
               </div>
 
               {/* Interactive Filter segmented control */}
-              <div className="flex items-center gap-1 p-1 bg-white/[0.04] rounded-lg border border-white/10 self-start md:self-auto overflow-x-auto">
+              <div className="flex items-center gap-1 p-1 bg-white/[0.04] rounded-lg border border-white/10 self-start md:self-auto overflow-x-auto max-w-full">
                 {['All', 'GenAI & LLMs', 'Cloud & Distributed', 'Computer Vision', 'Full-Stack Web'].map((category) => (
                   <button
                     key={category}
@@ -644,18 +658,19 @@ export default function App() {
                   </button>
                 ))}
               </div>
-            </div>
+            </Reveal>
 
             {/* Dynamic Grid of Projects */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <AnimatePresence mode="popLayout">
               {filteredProjects.map((project) => (
+                <motion.div key={project.id} layout initial={{ opacity: 0, y: 40, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }} viewport={{ once: true, margin: '0px 0px -10% 0px' }} transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }} className="h-full">
                 <Interactive3DCard
-                  key={project.id}
                   onClick={() => {
                     soundFx.playPop();
                     setSelectedProject(project);
                   }}
-                  className="glass-panel glass-panel-hover rounded-2xl overflow-hidden group flex flex-col justify-between"
+                  className="glass-panel glass-panel-hover rounded-2xl overflow-hidden group flex flex-col justify-between h-full"
                 >
                   <div>
                     {/* Media Frame */}
@@ -717,7 +732,9 @@ export default function App() {
                     </div>
                   </div>
                 </Interactive3DCard>
+                </motion.div>
               ))}
+              </AnimatePresence>
             </div>
           </div>
         </section>
@@ -725,15 +742,13 @@ export default function App() {
         {/* SECTION: CLOUD & AI CREDENTIALS HUB (Linked with Google Drive Folder) */}
         <section id="certifications" className="py-20 border-b border-white/5">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+            <Reveal y={22} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
               <div>
                 <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                   <Award className="w-4 h-4" />
                   <span>Credential Repository</span>
                 </div>
-                <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                  Google Cloud & Microsoft Azure verified credentials.
-                </h2>
+                <SplitHeading text={"Google Cloud & Microsoft Azure verified credentials."} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
                 <p className="text-slate-400 text-sm mt-2 max-w-2xl">
                   Reflecting 45+ earned badges across Generative AI on Vertex AI, Kubernetes operations on GKE, Azure OpenAI RAG architectures, and enterprise security.
                 </p>
@@ -754,7 +769,7 @@ export default function App() {
                   <ExternalLink className="w-3.5 h-3.5" />
                 </a>
               </div>
-            </div>
+            </Reveal>
 
             {/* Search & Category Filter */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-8">
@@ -796,15 +811,16 @@ export default function App() {
 
             {/* Certifications 3-in-a-Row Horizontal Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <AnimatePresence mode="popLayout">
               {filteredCertifications.map((cert) => (
+                <motion.div key={cert.id} layout initial={{ opacity: 0, y: 28, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }} viewport={{ once: true, margin: '0px 0px -8% 0px' }} transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }} className="h-full">
                 <div
-                  key={cert.id}
                   onClick={() => {
                     soundFx.playPop();
                     setSelectedCert(cert);
                   }}
                   onMouseEnter={() => soundFx.playHover()}
-                  className="glass-panel glass-panel-hover p-6 rounded-xl flex flex-col justify-between cursor-pointer group"
+                  className="glass-panel glass-panel-hover p-6 rounded-xl flex flex-col justify-between cursor-pointer group h-full"
                 >
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
@@ -845,7 +861,9 @@ export default function App() {
                     </span>
                   </div>
                 </div>
+                </motion.div>
               ))}
+              </AnimatePresence>
             </div>
 
             {filteredCertifications.length === 0 && (
@@ -872,22 +890,20 @@ export default function App() {
         {/* SECTION: SYSTEM PLAYGROUND */}
         <section id="architecture" className="py-20 border-b border-white/5 bg-black/20">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mb-12">
+            <Reveal y={22} className="max-w-3xl mb-12">
               <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2 flex items-center gap-1.5">
                 <Terminal className="w-4 h-4" />
                 <span>Interactive Architecture Simulation</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                Simulate multi-cloud agent pipelines in real-time.
-              </h2>
+              <SplitHeading text={"Simulate multi-cloud agent pipelines in real-time."} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
               <p className="text-slate-300 text-base mt-2 leading-relaxed">
                 Experience how Abhilash designs resilient systems. Select deployment targets, configure agent specifications, and inspect simulated latency and FinOps telemetry.
               </p>
-            </div>
+            </Reveal>
 
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 glass-panel p-8 rounded-2xl border border-white/10">
+            <Reveal y={40} className="grid grid-cols-1 lg:grid-cols-12 gap-8 glass-panel p-8 rounded-2xl border border-white/10">
               {/* Left Configuration Pane */}
-              <div className="lg:col-span-5 space-y-6">
+              <Reveal x={-36} y={0} className="lg:col-span-5 space-y-6">
                 <div>
                   <label className="block text-xs font-semibold uppercase tracking-wider text-slate-300 mb-2">
                     Target Cloud Topology
@@ -950,7 +966,7 @@ export default function App() {
                   <Zap className="w-4 h-4" />
                   <span>{playgroundSimulating ? 'Running local scenario...' : 'Run illustrative scenario'}</span>
                 </button>
-              </div>
+              </Reveal>
 
               {/* Right Output Console Pane */}
               <div className="lg:col-span-7 bg-[#05070b] border border-white/10 rounded-xl p-6 font-mono text-xs flex flex-col justify-between">
@@ -1015,18 +1031,18 @@ export default function App() {
                   <span className="text-amber-300">MODE: LOCAL DEMO</span>
                 </div>
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         {/* SECTION: STACK — MATCHES THE GITHUB PROFILE README */}
         <section id="stack" className="py-20 border-b border-white/5">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mb-12">
+            <Reveal y={22} className="max-w-3xl mb-12">
               <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2">04 — GitHub Tech Stack</div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">Tools I <span className="text-indigo-400">build with.</span></h2>
+              <SplitHeading text="Tools I build with." accentWords={2} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
               <p className="mt-3 text-sm text-slate-400">The same technology categories and tools listed on my GitHub profile, organised for a closer look.</p>
-            </div>
+            </Reveal>
 
             <div className="space-y-6">
               {[
@@ -1038,7 +1054,10 @@ export default function App() {
                     { name: 'Go', icon: 'https://cdn.simpleicons.org/go/00ADD8' },
                     { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB' },
                     { name: 'Java', icon: 'https://cdn.simpleicons.org/openjdk/ED8B00' },
+                    { name: 'Kotlin', icon: 'https://cdn.simpleicons.org/kotlin/7F52FF' },
                     { name: 'Swift', icon: 'https://cdn.simpleicons.org/swift/F05138' },
+                    { name: 'Dart', icon: 'https://cdn.simpleicons.org/dart/0175C2' },
+                    { name: 'Rust', icon: 'https://cdn.simpleicons.org/rust/FFFFFF' },
                     { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6' },
                     { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript/F7DF1E' },
                     { name: 'Bash', icon: 'https://cdn.simpleicons.org/gnubash/4EAA25' },
@@ -1086,7 +1105,6 @@ export default function App() {
                     { name: 'RAG', icon: 'https://cdn.simpleicons.org/openai/FFFFFF' },
                     { name: 'MLflow', icon: 'https://cdn.simpleicons.org/mlflow/0194E2' },
                     { name: 'Ollama', icon: 'https://cdn.simpleicons.org/ollama/FFFFFF' },
-                    { name: 'Vector DBs', icon: 'https://cdn.simpleicons.org/chroma/FFFFFF' },
                   ],
                 },
                 {
@@ -1183,9 +1201,6 @@ export default function App() {
                     { name: 'Markdown', icon: 'https://cdn.simpleicons.org/markdown/FFFFFF' },
                     { name: 'GoLand', icon: 'https://cdn.simpleicons.org/goland/FFFFFF' },
                     { name: 'Anaconda', icon: 'https://cdn.simpleicons.org/anaconda/44A833' },
-                    { name: 'Firebase', icon: 'https://cdn.simpleicons.org/firebase/FFCA28' },
-                    { name: 'Ollama', icon: 'https://cdn.simpleicons.org/ollama/FFFFFF' },
-                    { name: 'macOS', icon: 'https://cdn.simpleicons.org/apple/FFFFFF' },
                     { name: 'ngrok', icon: 'https://cdn.simpleicons.org/ngrok/1F1E37' },
                     { name: 'Termius', icon: 'https://cdn.simpleicons.org/termius/FFFFFF' },
                   ],
@@ -1199,36 +1214,26 @@ export default function App() {
                   ],
                 },
               ].map((row, rIdx) => (
-                <div key={rIdx} className="glass-panel p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
+                <Reveal key={rIdx} delay={0.04}>
+                <div className="glass-panel p-6 rounded-2xl border border-white/5 hover:border-white/10 transition-colors">
                   <div className="text-xs font-mono text-indigo-400 mb-5 uppercase tracking-wider">{row.category}</div>
                   <div className="flex flex-wrap gap-4">
                     {row.tools.map((tool, tIdx) => (
-                      <div
+                      <TechIcon
                         key={tIdx}
-                        title={tool.name}
-                        onMouseEnter={() => soundFx.playHover()}
-                        className="group flex flex-col items-center gap-2 cursor-default"
-                      >
-                        <div className="w-12 h-12 rounded-xl bg-white/5 border border-white/8 flex items-center justify-center p-2.5 group-hover:bg-white/10 group-hover:border-indigo-500/40 group-hover:scale-110 transition-all duration-200 group-hover:shadow-lg group-hover:shadow-indigo-500/10">
-                          <img
-                            src={tool.icon}
-                            alt={tool.name}
-                            width={28}
-                            height={28}
-                            loading="lazy"
-                            className="w-7 h-7 object-contain"
-                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                          />
-                        </div>
-                        <span className="text-[10px] text-slate-500 group-hover:text-slate-300 transition-colors text-center leading-tight max-w-[64px]">{tool.name}</span>
-                      </div>
+                        name={tool.name}
+                        icon={tool.icon}
+                        index={tIdx}
+                        onHover={() => soundFx.playHover()}
+                      />
                     ))}
                   </div>
                 </div>
+                </Reveal>
               ))}
             </div>
 
-            <div className="mt-10 glass-panel p-6 rounded-2xl border border-white/5">
+            <Reveal y={28} className="mt-10 glass-panel p-6 rounded-2xl border border-white/5">
               <div className="text-xs font-mono text-indigo-400 mb-4 uppercase tracking-wider">Focus Areas</div>
               <div className="flex flex-wrap gap-2">
                 {['Cloud Engineering', 'DevOps & Platform Engineering', 'Infrastructure as Code', 'Automation', 'Distributed Systems', 'Backend Development', 'Generative AI', 'Agentic AI', 'MLOps', 'Cybersecurity', 'Web3'].map((area, i) => (
@@ -1237,28 +1242,27 @@ export default function App() {
                   </span>
                 ))}
               </div>
-            </div>
+            </Reveal>
           </div>
         </section>
 
         {/* SECTION: TECHNICAL SKILLS MATRIX */}
         <section id="skills" className="py-20 border-b border-white/5">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="max-w-3xl mb-12">
+            <Reveal y={22} className="max-w-3xl mb-12">
               <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2">
                 Technical Stack & Core Competencies
               </div>
-              <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                Comprehensive engineering capabilities.
-              </h2>
+              <SplitHeading text={"Comprehensive engineering capabilities."} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
               <p className="text-slate-400 text-sm mt-2">
                 A transparent breakdown of production competencies with concrete architectural specializations.
               </p>
-            </div>
+            </Reveal>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               {TECHNICAL_SKILLS.map((category, idx) => (
-                <div key={idx} className="glass-panel p-6 rounded-xl border border-white/5 space-y-4">
+                <Reveal key={idx} delay={(idx % 2) * 0.1} className="h-full">
+                <div className="glass-panel p-6 rounded-xl border border-white/5 space-y-4 h-full">
                   <h3 className="text-base font-bold text-white flex items-center gap-2">
                     <span className="w-1.5 h-1.5 rounded-full bg-indigo-500" />
                     <span>{category.title}</span>
@@ -1270,16 +1274,12 @@ export default function App() {
                           <span className="font-medium text-slate-200">{skill.name}</span>
                           <span className="text-slate-400 text-[11px]">{skill.note}</span>
                         </div>
-                        <div className="w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
-                          <div
-                            className="h-full bg-indigo-500 rounded-full transition-all duration-1000"
-                            style={{ width: `${skill.level}%` }}
-                          />
-                        </div>
+                        <SkillBar level={skill.level} delay={sIdx * 0.08} />
                       </div>
                     ))}
                   </div>
                 </div>
+                </Reveal>
               ))}
             </div>
           </div>
@@ -1295,9 +1295,7 @@ export default function App() {
                   <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2">
                     Initiate Direct Connection
                   </div>
-                  <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight">
-                    Let's build something remarkable.
-                  </h2>
+                  <SplitHeading text={"Let's build something remarkable."} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
                   <p className="text-slate-300 text-sm mt-3 leading-relaxed">
                     Currently evaluating opportunities for Senior Full-Stack Engineer, AI Solutions Architect, and Cloud Infrastructure roles. Reach out on WhatsApp, Email, LinkedIn, GitHub, or Instagram.
                   </p>
@@ -1483,6 +1481,20 @@ export default function App() {
                     </a>
 
                     <a
+                      href="https://dev.to/abhilash_sharma_ed042f65e"
+                      target="_blank"
+                      rel="noreferrer"
+                      onMouseEnter={() => soundFx.playHover()}
+                      className="p-3 glass-panel rounded-xl flex items-center gap-2.5 text-slate-300 hover:text-white hover:border-indigo-500/40 transition-colors"
+                    >
+                      <span className="w-4 h-4 rounded-sm bg-white text-black text-[8px] font-black flex items-center justify-center">DEV</span>
+                      <div>
+                        <div className="text-xs font-bold text-white">DEV.to</div>
+                        <div className="text-[11px] text-slate-400">Articles</div>
+                      </div>
+                    </a>
+
+                    <a
                       href={CANDIDATE_PROFILE.instagram}
                       target="_blank"
                       rel="noreferrer"
@@ -1522,7 +1534,7 @@ export default function App() {
               </div>
 
               {/* Right Column: Direct Messaging Form */}
-              <div className="lg:col-span-7 glass-panel p-8 rounded-2xl border border-white/10">
+              <Reveal x={36} y={0} className="lg:col-span-7 glass-panel p-8 rounded-2xl border border-white/10">
                 {contactSubmitted ? (
                   <div className="py-12 text-center space-y-3">
                     <div className="w-12 h-12 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center mx-auto">
@@ -1601,7 +1613,7 @@ export default function App() {
                     </button>
                   </form>
                 )}
-              </div>
+              </Reveal>
             </div>
           </div>
         </section>
@@ -1617,7 +1629,7 @@ export default function App() {
           </div>
 
           <div className="flex flex-wrap items-center gap-6">
-            <a href="#hero" className="hover:text-white transition-colors">Back to Top</a>
+            <button onClick={scrollToTop} className="hover:text-white transition-colors">Back to Top</button>
             <a href="#academics" className="hover:text-white transition-colors">Academics</a>
             <a href="#projects" className="hover:text-white transition-colors">Case Studies</a>
             <a href={CANDIDATE_PROFILE.driveCertificatesUrl} target="_blank" rel="noreferrer" className="hover:text-white transition-colors text-amber-300">Drive Certificates</a>
@@ -1631,12 +1643,26 @@ export default function App() {
       </footer>
 
       {/* MODAL: PROJECT DEEP DIVE */}
+      <AnimatePresence>
       {selectedProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <motion.div
+          key="project-modal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.28 }}
+          onClick={() => setSelectedProject(null)}
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+        >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.94, y: 28 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+            onClick={(e) => e.stopPropagation()}
+            data-lenis-prevent
             className="glass-panel max-w-3xl w-full max-h-[90vh] overflow-y-auto rounded-2xl border border-white/10 p-6 md:p-8 space-y-6"
           >
             <div className="flex items-start justify-between gap-4">
@@ -1725,16 +1751,31 @@ export default function App() {
               </button>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
       {/* MODAL: CERTIFICATION DETAILS */}
+      <AnimatePresence>
       {selectedCert && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md">
+        <motion.div
+          key="cert-modal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.28 }}
+          onClick={() => setSelectedCert(null)}
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-md"
+        >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.94, y: 28 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+            onClick={(e) => e.stopPropagation()}
+            data-lenis-prevent
             className="glass-panel max-w-lg w-full rounded-2xl border border-white/10 p-6 md:p-8 space-y-6"
           >
             <div className="flex items-start justify-between gap-4">
@@ -1790,16 +1831,31 @@ export default function App() {
               </button>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
       {/* MODAL: RESUME INSPECTOR */}
+      <AnimatePresence>
       {resumeModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <motion.div
+          key="resume-modal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.28 }}
+          onClick={() => setResumeModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+        >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.94, y: 28 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+            onClick={(e) => e.stopPropagation()}
+            data-lenis-prevent
             className="glass-panel max-w-4xl w-full max-h-[92vh] overflow-y-auto rounded-2xl border border-white/10 p-6 md:p-8 space-y-6"
           >
             <div className="flex items-start justify-between gap-4 pb-4 border-b border-white/10">
@@ -1893,16 +1949,31 @@ export default function App() {
               </button>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
 
       {/* MODAL: AWS BUILDER QR CODE FULLSCREEN SCANNER */}
+      <AnimatePresence>
       {awsQrModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md">
+        <motion.div
+          key="aws-qr-modal"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.28 }}
+          onClick={() => setAwsQrModalOpen(false)}
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/85 backdrop-blur-md"
+        >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.94, y: 28 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.96, y: 16 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+            onClick={(e) => e.stopPropagation()}
+            data-lenis-prevent
             className="glass-panel max-w-md w-full rounded-2xl border border-amber-500/30 p-6 sm:p-8 space-y-6 text-center relative overflow-hidden"
           >
             {/* Ambient top glow */}
@@ -1969,8 +2040,9 @@ export default function App() {
               </a>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       )}
+      </AnimatePresence>
     </div>
   );
 }

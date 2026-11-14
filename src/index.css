@@ -57,3 +57,47 @@
 ::-webkit-scrollbar-thumb:hover {
   background: #3b4566;
 }
+
+/* Lenis smooth-scroll (required rules) */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Gentle float loop used by hero chips and ambient blobs */
+@keyframes float-y {
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  50% { transform: translate3d(0, -12px, 0); }
+}
+.float-slow {
+  animation: float-y 6s ease-in-out infinite;
+}
+.float-slower {
+  animation: float-y 8.5s ease-in-out infinite;
+  animation-delay: -2s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-slow,
+  .float-slower {
+    animation: none;
+  }
+}
+
+/* Visible keyboard focus without affecting mouse users */
+:focus-visible {
+  outline: 2px solid #818cf8;
+  outline-offset: 2px;
+}
