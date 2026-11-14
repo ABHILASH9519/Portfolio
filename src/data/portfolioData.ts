@@ -1,9 +1,5 @@
 import portraitPhoto from '../assets/images/file_00000000a8388208afeea3a8dc5f9e66.jpg';
 import awsBuilderQrCode from '../assets/images/tachyons-QR-Code.png';
-import genAiStudioImage from '../assets/images/project_genai_studio_1791967761930.jpg';
-import kubernetesCloudImage from '../assets/images/project_k8s_cloud_1791967799777.jpg';
-import cloudAiPlatformImage from '../assets/images/hero_cloud_ai_platform_1791967729104.jpg';
-import planetaryHeroImage from '../assets/images/edolus_planetary_hero_1791967604420.jpg';
 
 export interface ProjectMetric {
   label: string;
@@ -30,6 +26,7 @@ export interface Project {
   metrics: ProjectMetric[];
   image: string;
   githubUrl: string;
+  liveUrl?: string;
   architectureDiagram?: string;
   systemBreakdown?: ProjectBreakdown;
 }
@@ -247,119 +244,262 @@ export const CERTIFICATIONS: Certification[] = [
 
 export const PROJECTS: Project[] = [
   {
-    id: 'cognitive-streaming-agent',
-    title: 'Cognitive: Multi-Agent LLM Orchestration Platform',
-    tagline: 'Autonomous reasoning pipelines with vector clustering, live token telemetry, and human-in-the-loop audit.',
-    category: 'GenAI & LLMs',
-    period: '2025 – Present',
-    role: 'Lead Architect & Full-Stack Developer',
-    summary: 'A resilient multi-agent orchestration runtime leveraging Gemini 2.5 Flash / Pro and Azure OpenAI with hybrid vector search, dynamic tool execution, and sub-100ms streaming websockets.',
-    highlights: [
-      'Engineered streaming agent task loops supporting iterative tool calling, code execution, and graph-based memory retention.',
-      'Implemented vector search with semantic re-ranking achieving 94.6% retrieval accuracy across 250k enterprise documents.',
-      'Built reactive React 19 interface with real-time token throughput meters, step inspector, and live token usage metrics.'
-    ],
-    techStack: ['TypeScript', 'React 19', 'Gemini API', 'Tailwind CSS', 'Vector Embeddings', 'Node.js', 'PostgreSQL / pgvector'],
-    metrics: [
-      { label: 'Retrieval Accuracy', value: '94.6%' },
-      { label: 'Token Throughput', value: '38k t/s' },
-      { label: 'Median Response Time', value: '142ms' }
-    ],
-    image: genAiStudioImage,
-    githubUrl: 'https://github.com/ABHILASH9519',
-    architectureDiagram: 'Client React UI ⇄ Fast Gateway ⇄ Agent Orchestrator ⇄ Vertex AI / Azure Search ⇄ Vector DB Cache',
-    systemBreakdown: {
-      overview: 'Modern organizations struggle to deploy agentic workflows safely with observable latency, audit logs, and cost controls. Cognitive solves this by integrating declarative agent definitions with high-throughput streaming pipelines.',
-      keyChallenges: 'Mitigating context dilution over 20+ turns while preventing hallucinations in strict domain tasks.',
-      solutionArchitecture: 'Designed a hierarchical memory buffer that auto-summarizes earlier turns into vector bookmarks. Added rigorous JSON schema validation on tool calls with rollback safeguards.',
-      impact: 'Adopted internally for research workflows, cutting automated report generation time from 4 hours to 90 seconds.'
-    }
+    id: "cloudsentinels",
+    title: "CloudSentinels",
+    tagline: "Incident-management and observability console for cloud workloads and Kubernetes clusters.",
+    category: "AI & Agentic",
+    period: 'Public repo',
+    role: "Full-Stack Developer",
+    summary: "React/TypeScript frontend with a Motoko backend on the Internet Computer: Internet Identity sign-in, incident lifecycle, alert and metric records, and AI insight fields. Ships a Prometheus Operator ruleset for Kubernetes monitoring.",
+    highlights: ["Incident creation, status updates, comments and admin-only deletion with role/permission checks in backend methods.", "Dashboard summaries over alert and metric records with periodic frontend refresh.", "Prometheus rules for pod crash loops, unavailable replicas and high CPU/memory against requests."],
+    techStack: ["React", "TypeScript", "Motoko", "Internet Computer", "Prometheus", "Kubernetes"],
+    metrics: [{ label: "Frontend", value: "React + TS" }, { label: "Backend", value: "Motoko" }, { label: "Monitoring", value: "Prometheus rules" }],
+    image: `${import.meta.env.BASE_URL}projects/cloudsentinels.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/cloudsentinels",
+    architectureDiagram: "Browser (React) ⇄ Internet Identity ⇄ Motoko canister ⇄ in-memory records · Prometheus rules → Alertmanager (adapter not yet built)",
+    systemBreakdown: { overview: "An incident console for teams operating cloud workloads and Kubernetes clusters.", keyChallenges: "The README is explicit that records live in canister memory, and that Prometheus alerts are not yet ingested into the UI.", solutionArchitecture: "Caller-scoped profiles, role checks in backend methods, and a starter Prometheus Operator ruleset documented under deploy/kubernetes.", impact: "Working incident workflow and monitoring starter; production persistence and alert ingestion are documented as future work." }
   },
   {
-    id: 'multicloud-k8s-mesh',
-    title: 'AegisCloud: Multi-Cloud Kubernetes & Service Mesh',
-    tagline: 'High-availability cross-region microservices deployment spanning GKE and Azure AKS with automated failover.',
-    category: 'Cloud & Distributed',
-    period: '2024 – 2025',
-    role: 'DevOps & Cloud Systems Engineer',
-    summary: 'Distributed microservices architecture operating simultaneously across Google Cloud and Microsoft Azure with Terraform IaC, Istio traffic splitting, and continuous zero-downtime deployment pipelines.',
-    highlights: [
-      'Authored modular Terraform modules provisioning VPC peering, GKE clusters, AKS node pools, and mutual TLS service meshes.',
-      'Configured Prometheus and Grafana dashboards with alert manager notifying PagerDuty for anomalies within 45 seconds.',
-      'Designed zero-trust IAM baselines, Azure RBAC roles, and Google Cloud workload identities with rotating short-lived tokens.'
-    ],
-    techStack: ['Kubernetes (GKE/AKS)', 'Terraform', 'Docker', 'Istio', 'Prometheus', 'Azure CLI', 'Google Cloud Platform'],
-    metrics: [
-      { label: 'Uptime Reliability', value: '99.98%' },
-      { label: 'Cross-Cloud Failover', value: '< 2.4s' },
-      { label: 'Microservices Managed', value: '32 Services' }
-    ],
-    image: kubernetesCloudImage,
-    githubUrl: 'https://github.com/ABHILASH9519',
-    architectureDiagram: 'Cloudflare Anycast ⇄ Multi-Region Load Balancer ⇄ GKE Cluster (US) + AKS Cluster (EU) ⇄ Distributed KV Store',
-    systemBreakdown: {
-      overview: 'Engineered an active-active cloud architecture enabling geographical redundancy and regulatory compliance for international clients.',
-      keyChallenges: 'Data consistency across cross-cloud latency barriers without incurring exorbitant egress transfer fees.',
-      solutionArchitecture: 'Employed an event-driven Kafka broker with local asynchronous read replicas and write-ahead transaction log synchronization.',
-      impact: 'Zero customer downtime during regional cloud provider maintenance windows.'
-    }
+    id: "echo-assist",
+    title: "Echo Assist",
+    tagline: "Productivity command center with a task dashboard, REST API and MCP task tools.",
+    category: "AI & Agentic",
+    period: 'Public repo',
+    role: "Developer",
+    summary: "Node.js app with natural-language task commands, a daily agenda endpoint, an MCP Streamable HTTP endpoint exposing add/list/complete task tools, optional PostgreSQL persistence and optional Amazon Bedrock responses.",
+    highlights: ["Create, search, complete and delete tasks with priority and due dates.", "POST /mcp endpoint exposing add_task, list_tasks and complete_task tools.", "PostgreSQL when DATABASE_URL is set; JSON-file fallback for local prototyping."],
+    techStack: ["Node.js", "MCP", "PostgreSQL", "Amazon Bedrock", "REST API"],
+    metrics: [{ label: "Runtime", value: "Node.js 22+" }, { label: "Protocol", value: "MCP over HTTP" }, { label: "Storage", value: "PostgreSQL / JSON" }],
+    image: `${import.meta.env.BASE_URL}projects/echo-assist.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/echo-assist",
+    architectureDiagram: "Dashboard UI ⇄ REST API + /mcp ⇄ PostgreSQL (or JSON file) · optional Amazon Bedrock Converse API",
+    systemBreakdown: { overview: "A small assistant that manages tasks through a UI, a REST API and MCP tools.", keyChallenges: "Keeping one task model consistent across the dashboard, natural-language commands and MCP tools.", solutionArchitecture: "Single Node server exposing REST and MCP endpoints over a shared task store with Postgres or file fallback.", impact: "A working MCP-enabled task assistant; Bedrock responses are optional and need AWS configuration." }
   },
   {
-    id: 'document-intelligence-pipeline',
-    title: 'DocuSync: Automated Enterprise OCR & Structured Parsing',
-    tagline: 'Serverless document extraction pipeline parsing unformatted PDFs, invoices, and blueprints into verified JSON schemas.',
-    category: 'Computer Vision',
-    period: '2024',
-    role: 'AI Engineer & Full-Stack Developer',
-    summary: 'High-throughput document analysis pipeline utilizing Azure Document Intelligence and Google Cloud Vision models with confidence-scored field extraction and human validation consoles.',
-    highlights: [
-      'Processed over 150,000 heterogeneous documents with custom-trained key-value models and boundary-box validation.',
-      'Built full-stack review portal allowing audit teams to highlight and correct extracted tokens with real-time learning loops.',
-      'Integrated webhooks directly pushing standardized accounting records into SAP and enterprise ERP databases.'
-    ],
-    techStack: ['Azure Document Intelligence', 'Google Vision API', 'FastAPI', 'React', 'Tailwind CSS', 'Redis Queue'],
-    metrics: [
-      { label: 'Fields Extracted/Sec', value: '1,200+' },
-      { label: 'Extraction Precision', value: '98.8%' },
-      { label: 'Manual Effort Reduction', value: '82%' }
-    ],
-    image: cloudAiPlatformImage,
-    githubUrl: 'https://github.com/ABHILASH9519',
-    systemBreakdown: {
-      overview: 'Manual processing of legal contracts and shipping manifests was bottlenecking warehouse turnaround times.',
-      keyChallenges: 'Variable layouts, crumpled scans, handwritten signatures, and tabular row misalignment.',
-      solutionArchitecture: 'Pre-processed images with OpenCV deskewing and contrast normalization before executing tiered OCR and LLM schema realignment.',
-      impact: 'Reduced invoice turnaround from 48 hours to 12 seconds with high audit compliance.'
-    }
+    id: "nexus-research-engine",
+    title: "Nexus Research Engine",
+    tagline: "Research workspace with projects, document search, AI chat and agent runs.",
+    category: "AI & Agentic",
+    period: 'Public repo',
+    role: "Full-Stack Developer",
+    summary: "React/TypeScript frontend and Motoko backend with project management, document upload and search, chat history, agent runs with metrics, and dashboard, analytics and admin pages.",
+    highlights: ["Backend API for projects, documents, search, chat and agent runs.", "Agent run tracking and agent metrics endpoints.", "Landing, dashboard, workspace, analytics, auth and admin-settings pages."],
+    techStack: ["React", "TypeScript", "Motoko", "Internet Computer", "pnpm"],
+    metrics: [{ label: "Frontend", value: "React + TS" }, { label: "Backend", value: "Motoko" }, { label: "Pages", value: "6 views" }],
+    image: `${import.meta.env.BASE_URL}projects/nexus-research-engine.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/Nexus-research-engine",
+    architectureDiagram: "React UI ⇄ generated bindings ⇄ Motoko canister (projects · documents · chat · agent runs)",
+    systemBreakdown: { overview: "A workspace for organising research projects, documents and AI-assisted analysis.", keyChallenges: "Connecting a typed frontend to canister methods through generated bindings.", solutionArchitecture: "Typed Motoko mixins per domain (projects, documents, chat, agents, analytics) behind one actor.", impact: "Source-available prototype of a research workspace; no deployment claims." }
   },
   {
-    id: 'realtime-interactive-portfolio',
-    title: 'Kinetic: Motion-Driven Systems Portfolio & Audio Engine',
-    tagline: 'Awwwards SOTD-grade interactive portfolio crafted with unicorn springs, magnetic cursor, interactive audio waves, and dynamic shaders.',
-    category: 'Full-Stack Web',
-    period: '2025',
-    role: 'Creative Technologist',
-    summary: 'High-motion interactive portfolio engine inspired by Motion Dev, Springs Studio, Unicorn Studio, and Balsa UI: fluid scroll-velocity physics, magnetic buttons, interactive audio visualizers, and verifiable recruiter audits.',
-    highlights: [
-      'Built custom spring physics and scroll tracking with Motion hardware-composited transforms.',
-      'Engineered interactive synthesized audio feedback using Web Audio API frequencies on touch.',
-      'Achieved 100/100 Lighthouse benchmark with sub-16ms smooth 60/120Hz display refresh.'
-    ],
-    techStack: ['React 19', 'Motion', 'Tailwind CSS v4', 'Web Audio API', 'TypeScript', 'Lucide Icons'],
-    metrics: [
-      { label: 'Motion Frame Rate', value: '120 FPS' },
-      { label: 'Layout Shift (CLS)', value: '0.00' },
-      { label: 'Interaction Latency', value: '< 8ms' }
-    ],
-    image: planetaryHeroImage,
-    githubUrl: 'https://github.com/ABHILASH9519',
-    systemBreakdown: {
-      overview: 'Standing out on competitive hiring boards requires palpable proof of design craft, motion sensibility, and systems architecture.',
-      keyChallenges: 'Achieving lavish fluid motion without layout jitter or degrading performance on low-power devices.',
-      solutionArchitecture: 'Compositor-only hardware transforms, RAF debounced velocity tracking, and zero layout thrashing.',
-      impact: 'Setting the gold standard for full-stack engineering portfolios.'
-    }
-  }
+    id: "lunarreg-workbench",
+    title: "LunarRegWorkbench",
+    tagline: "Automated lunar image registration and correspondence analysis.",
+    category: "AI & Agentic",
+    period: 'Public repo',
+    role: "Developer",
+    summary: "Computer-vision workbench for aligning lunar images from different missions and sensors (e.g. Chandrayaan-2, LRO, SELENE): feature detection, matching, geometric verification, transformation estimation and visual evaluation.",
+    highlights: ["SIFT, ORB and AKAZE feature extraction with ratio-test and cross-check matching.", "RANSAC outlier rejection with similarity, affine or homography models.", "Original, reference, registered, overlay, difference and checkerboard views."],
+    techStack: ["Computer Vision", "SIFT / ORB / AKAZE", "RANSAC", "React", "TypeScript", "Motoko"],
+    metrics: [{ label: "Detectors", value: "SIFT · ORB · AKAZE" }, { label: "Models", value: "Similarity · Affine · Homography" }, { label: "Views", value: "6 comparisons" }],
+    image: `${import.meta.env.BASE_URL}projects/lunarreg-workbench.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/lunarreg-workbench",
+    architectureDiagram: "Source + reference image → preprocessing → features → matching → RANSAC → transform → registered output + evaluation views",
+    systemBreakdown: { overview: "Images of the same lunar region differ by sensor, scale and illumination, making alignment hard.", keyChallenges: "Cross-sensor differences in illumination, viewing angle and resolution.", solutionArchitecture: "Multi-scale preprocessing, multiple detectors, grid-based match selection and geometric verification.", impact: "A registration and evaluation workflow; see the repo README for what is implemented." }
+  },
+  {
+    id: "full-cicd-jenkins-docker-k8s",
+    title: "Full CI/CD with Jenkins, Docker & Kubernetes",
+    tagline: "Security-first delivery pipeline for a containerised Python service.",
+    category: "Cloud & DevOps",
+    period: 'Public repo',
+    role: "DevOps Engineer",
+    summary: "Jenkins declarative pipeline plus GitHub Actions validating, testing and building a Flask/Gunicorn API, with Ruff, Bandit, pip-audit, a hardened non-root Docker image and Kubernetes manifests.",
+    highlights: ["Ruff linting, Bandit static security checks, pip-audit dependency checks and pytest with JUnit reports.", "Non-root, slim, health-checked container image.", "Kubernetes manifests with two replicas, probes, resource limits, rolling updates and a PodDisruptionBudget."],
+    techStack: ["Jenkins", "GitHub Actions", "Docker", "Kubernetes", "Python", "Flask", "pytest"],
+    metrics: [{ label: "CI", value: "Jenkins + Actions" }, { label: "Security", value: "Bandit · pip-audit" }, { label: "Replicas", value: "2 + PDB" }],
+    image: `${import.meta.env.BASE_URL}projects/full-cicd-jenkins-docker-k8s.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/Full-CI-CD-Pipeline-with-Jenkins-Docker-and-Kubernetes",
+    architectureDiagram: "Commit → lint → test → security scan → Docker build → Kubernetes manifests (probes · limits · rolling update)",
+    systemBreakdown: { overview: "A production-minded workflow for validating and packaging a containerised API before release.", keyChallenges: "Putting security and quality gates in the pipeline without slowing delivery.", solutionArchitecture: "Declarative Jenkins pipeline mirrored by GitHub Actions, with a hardened container and resilient Kubernetes manifests.", impact: "A complete reference pipeline with documented checks." }
+  },
+  {
+    id: "terraform-aws-iac",
+    title: "Terraform AWS Infrastructure",
+    tagline: "Reusable, environment-aware IaC with security-conscious defaults.",
+    category: "Cloud & DevOps",
+    period: 'Public repo',
+    role: "Cloud Engineer",
+    summary: "Terraform modules for a VPC (public/private subnets, routes, IGW) and an optional EC2 instance (no public IP, IMDSv2 required, encrypted root EBS) with separate dev and prod roots.",
+    highlights: ["Input validation for CIDRs, subnet/AZ lists and AMI.", "GitHub Actions format and validate for both environments.", "Checkov scan fails CI on policy findings."],
+    techStack: ["Terraform", "AWS", "GitHub Actions", "Checkov"],
+    metrics: [{ label: "Environments", value: "dev + prod" }, { label: "EC2 defaults", value: "IMDSv2 · encrypted EBS" }, { label: "CI", value: "fmt · validate · Checkov" }],
+    image: `${import.meta.env.BASE_URL}projects/terraform-aws-iac.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/Infrastructure-as-Code-with-Terraform-and-AWS",
+    architectureDiagram: "dev / prod root modules → VPC module (+ optional EC2 module) → AWS, gated by fmt, validate and Checkov in CI",
+    systemBreakdown: { overview: "Reusable AWS infrastructure meant to be reviewed and validated before any human-approved deployment.", keyChallenges: "Safe defaults without blocking reuse across environments.", solutionArchitecture: "Small composable modules with validated inputs and policy scanning in CI.", impact: "Reviewable IaC; no deployment is performed by the repo itself." }
+  },
+  {
+    id: "ansible-server-automation",
+    title: "Ansible Server Automation",
+    tagline: "Repeatable Linux baseline configuration and managed Nginx with Ansible roles.",
+    category: "Cloud & DevOps",
+    period: 'Public repo',
+    role: "DevOps Engineer",
+    summary: "Role-based Ansible project: base packages, optional operations user and Nginx site configuration, inventory-driven targeting, templates, handlers and a /healthz endpoint.",
+    highlights: ["Reusable roles with shared defaults and inventory-driven targets.", "Pytest regression tests and Ansible syntax validation in GitHub Actions.", "Documented check-mode, rollout and rollback practices."],
+    techStack: ["Ansible", "Nginx", "Linux", "pytest", "GitHub Actions"],
+    metrics: [{ label: "Roles", value: "base · ops user · nginx" }, { label: "Health", value: "/healthz :8080" }, { label: "CI", value: "tests + syntax check" }],
+    image: `${import.meta.env.BASE_URL}projects/ansible-server-automation.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/Ansible-server-Automation",
+    architectureDiagram: "Inventory → playbook → roles (base · user · nginx) → managed templates + handlers → /healthz",
+    systemBreakdown: { overview: "Configuring servers by hand is slow and drifts over time.", keyChallenges: "Making runs safe to repeat and easy to review.", solutionArchitecture: "Roles, templates and handlers with check-mode first-run guidance.", impact: "A tested baseline and Nginx landing page automation." }
+  },
+  {
+    id: "code-to-cluster",
+    title: "Code to Cluster: EKS with Jenkins & Terraform",
+    tagline: "Guided lab: EKS cluster and app deployment with CI/CD via Jenkins and Terraform.",
+    category: "Cloud & DevOps",
+    period: 'Public repo',
+    role: "Guided DevOps lab",
+    summary: "Hands-on lab covering a Terraform-provisioned Jenkins server, a private-subnet EKS cluster, Kubernetes manifests for an Nginx app and a Jenkins pipeline.",
+    highlights: ["Jenkins server on EC2 with Java, AWS CLI, Terraform, Docker, Sonar, Helm, Trivy and kubectl.", "EKS cluster in a private subnet via Terraform.", "Jenkinsfile and manifests for an Nginx deployment."],
+    techStack: ["Terraform", "AWS EKS", "Jenkins", "Kubernetes", "Helm", "Trivy"],
+    metrics: [{ label: "Type", value: "Guided lab" }, { label: "Cluster", value: "AWS EKS" }, { label: "IaC", value: "Terraform" }],
+    image: `${import.meta.env.BASE_URL}projects/code-to-cluster.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/Code-To-Cluster",
+    architectureDiagram: "Terraform → Jenkins EC2 + EKS (private subnet) → Jenkins pipeline → Kubernetes Nginx deployment",
+    systemBreakdown: { overview: "An end-to-end walkthrough from infrastructure to a deployed containerised app.", keyChallenges: "Wiring cluster creation, tooling and pipeline together.", solutionArchitecture: "Terraform for infra, Jenkins for delivery, manifests for the app.", impact: "Learning project following a public step-by-step guide." }
+  },
+  {
+    id: "ci-cd-automator",
+    title: "CI/CD Automator",
+    tagline: "Guided lab: multi-tool CI/CD with Terraform, Ansible, Jenkins, Maven and SonarQube.",
+    category: "Cloud & DevOps",
+    period: 'Public repo',
+    role: "Guided DevOps lab",
+    summary: "Implementation of a public DevOps project: Terraform-provisioned infrastructure, Ansible-configured Jenkins master/agents, multibranch pipeline with webhooks, SonarQube analysis and Kubernetes deployment files.",
+    highlights: ["Jenkins master and Maven build agent configured with Ansible.", "Multibranch pipeline triggered by GitHub webhooks.", "Dockerfile, Jenkinsfile and Kubernetes manifests included."],
+    techStack: ["Jenkins", "Terraform", "Ansible", "Maven", "SonarQube", "Kubernetes"],
+    metrics: [{ label: "Type", value: "Guided lab" }, { label: "Build", value: "Maven" }, { label: "Quality", value: "SonarQube" }],
+    image: `${import.meta.env.BASE_URL}projects/ci-cd-automator.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/CI-CD-Automator",
+    architectureDiagram: "Terraform → Jenkins master + agent (Ansible) → Maven build → SonarQube → Docker → Kubernetes",
+    systemBreakdown: { overview: "A full pipeline built by following an established DevOps reference project.", keyChallenges: "Coordinating many tools into one flow.", solutionArchitecture: "Infra as code, configuration management and a multibranch pipeline.", impact: "Learning project based on a public guide." }
+  },
+  {
+    id: "jenkins-argocd-helm",
+    title: "Jenkins + Argo CD + Helm Java Pipeline",
+    tagline: "Guided lab: GitOps pipeline for a Spring Boot app with SonarQube, Helm and Argo CD.",
+    category: "Cloud & DevOps",
+    period: 'Public repo',
+    role: "Guided DevOps lab",
+    summary: "Pipeline for a Java application using Maven, SonarQube, Helm and Argo CD with Kubernetes manifests; the repo contains a Spring Boot app and its manifests.",
+    highlights: ["Maven build, unit tests and SonarQube analysis stages.", "Helm-based deployment promoted through Argo CD.", "Spring Boot app plus Kubernetes manifests in the repo."],
+    techStack: ["Jenkins", "Maven", "SonarQube", "Helm", "Argo CD", "Spring Boot"],
+    metrics: [{ label: "Type", value: "Guided lab" }, { label: "Deploy", value: "Helm + Argo CD" }, { label: "App", value: "Spring Boot" }],
+    image: `${import.meta.env.BASE_URL}projects/jenkins-argocd-helm.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/animated-fiesta",
+    architectureDiagram: "Git → Jenkins (build · test · Sonar) → Helm → Argo CD → Kubernetes",
+    systemBreakdown: { overview: "A GitOps-style pipeline for a Java service.", keyChallenges: "Chaining CI, quality gates and GitOps deployment.", solutionArchitecture: "Jenkins for CI with Argo CD performing the deployment.", impact: "Learning project following a public guide." }
+  },
+  {
+    id: "distributed-mapreduce",
+    title: "Distributed MapReduce Framework",
+    tagline: "Distributed word-count engine in Go with leased tasks and fencing tokens.",
+    category: "Systems & Backend",
+    period: 'Public repo',
+    role: "Systems Developer",
+    summary: "Coordinator and independent worker processes using Go standard-library RPC. Tasks are leased, expired leases are reassigned, and unique fencing tokens reject stale workers; reduce output is published atomically.",
+    highlights: ["Lease expiry with reassignment of abandoned work.", "Completion validated by worker ID, task ID, kind and lease token.", "Atomic output via temp file and rename; no third-party dependencies."],
+    techStack: ["Go", "RPC", "Concurrency", "Distributed Systems"],
+    metrics: [{ label: "Language", value: "Go 1.22+" }, { label: "Dependencies", value: "None" }, { label: "Checks", value: "vet · test -race" }],
+    image: `${import.meta.env.BASE_URL}projects/distributed-mapreduce.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/Distributed-MapReduce-Framework",
+    architectureDiagram: "Input → Coordinator (map leases) → Workers → word counts → Reduce → sorted output",
+    systemBreakdown: { overview: "A small MapReduce-style engine to explore fault tolerance.", keyChallenges: "Reassigning work safely without double-publishing results.", solutionArchitecture: "Time-limited leases with fencing tokens and atomic publish.", impact: "Educational framework with race-tested coordination logic." }
+  },
+  {
+    id: "multithreaded-network-server",
+    title: "Multithreaded Network Server (C++)",
+    tagline: "TCP server with a bounded worker pool and a line protocol.",
+    category: "Systems & Backend",
+    period: 'Public repo',
+    role: "Systems Developer",
+    summary: "C++ socket server with getaddrinfo (IPv4/IPv6) resolution, a fixed-size worker pool, 4 KiB request limit, signal-triggered shutdown, CMake build, CTest tests and CI.",
+    highlights: ["Bounded concurrency via a fixed worker pool.", "Empty and oversized request handling.", "Local socket-pair tests for normal, empty, oversized and shutdown cases."],
+    techStack: ["C++", "CMake", "CTest", "Sockets", "GitHub Actions"],
+    metrics: [{ label: "Language", value: "C++" }, { label: "Payload limit", value: "4 KiB" }, { label: "Tests", value: "CTest" }],
+    image: `${import.meta.env.BASE_URL}projects/multithreaded-network-server.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/Multithreaded-Network-Server",
+    architectureDiagram: "Client ⇄ TCP listener → bounded worker pool → line-protocol handler",
+    systemBreakdown: { overview: "An educational project on socket programming and worker-pool lifecycle.", keyChallenges: "Bounding concurrency and handling bad input safely.", solutionArchitecture: "A fixed pool with a newline-delimited protocol and clean shutdown path.", impact: "Educational; the README notes it is not a hardened internet-facing service." }
+  },
+  {
+    id: "cloud-access-saas",
+    title: "Cloud Access SaaS Platform",
+    tagline: "Node.js/Express auth API scaffold with JWT and Prisma on PostgreSQL.",
+    category: "Systems & Backend",
+    period: 'Public repo',
+    role: "Backend Developer",
+    summary: "Registration and login endpoints with bcrypt password hashing, JWT issuance, input validation and a Prisma User model on PostgreSQL. The README states that IAM provisioning, tenant isolation and billing are not implemented.",
+    highlights: ["POST /api/auth/register and /api/auth/login with seven-day JWTs.", "Email normalisation, password rules and bcrypt 72-byte limit enforced.", "Configurable CORS and a 32 KB JSON body limit; Node test runner tests."],
+    techStack: ["Node.js", "Express", "Prisma", "PostgreSQL", "JWT", "bcrypt"],
+    metrics: [{ label: "Auth", value: "JWT + bcrypt" }, { label: "ORM", value: "Prisma" }, { label: "DB", value: "PostgreSQL" }],
+    image: `${import.meta.env.BASE_URL}projects/cloud-access-saas.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/Cloud-Access-SaaS-Platform",
+    architectureDiagram: "Client ⇄ Express API (validation · bcrypt · JWT) ⇄ Prisma ⇄ PostgreSQL",
+    systemBreakdown: { overview: "A starting point for an access-management SaaS.", keyChallenges: "Getting authentication fundamentals right before building more.", solutionArchitecture: "Small Express service with validated credentials and Prisma-backed users.", impact: "Auth basics implemented and tested; the README lists what remains out of scope." }
+  },
+  {
+    id: "api-automation-testing",
+    title: "API Automation Testing Framework",
+    tagline: "Reusable Pytest framework with a deterministic local demo API.",
+    category: "Systems & Backend",
+    period: 'Public repo',
+    role: "QA Automation",
+    summary: "Python/Pytest suite for REST API validation with a FastAPI demo service, reusable fixtures, a Postman collection with executable assertions and a GitHub Actions regression workflow.",
+    highlights: ["Contract, create/read, not-found, missing-field and boundary checks.", "Isolated test state with reusable fixtures.", "Postman collection runnable against the local demo API."],
+    techStack: ["Python", "Pytest", "FastAPI", "Postman", "GitHub Actions"],
+    metrics: [{ label: "Framework", value: "Pytest" }, { label: "Demo API", value: "FastAPI" }, { label: "CI", value: "GitHub Actions" }],
+    image: `${import.meta.env.BASE_URL}projects/api-automation-testing.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/API-Automation-Testing-Framework",
+    architectureDiagram: "Pytest fixtures ⇄ FastAPI demo API (in-memory) · Postman collection · GitHub Actions regression run",
+    systemBreakdown: { overview: "API tests that run without external accounts or keys.", keyChallenges: "Keeping tests deterministic and isolated.", solutionArchitecture: "A local demo API plus fixtures so the suite is self-contained.", impact: "Reusable regression suite and Postman collection." }
+  },
+  {
+    id: "job-application-evidence-planner",
+    title: "Job Application Evidence Planner",
+    tagline: "Privacy-first tracker that maps job requirements to concrete evidence.",
+    category: "Full-Stack Web",
+    period: 'Public repo',
+    role: "Full-Stack Developer",
+    summary: "Browser app for tracking applications and linking role requirements to project, experience or evidence links. Data stays in IndexedDB with explicit JSON export and merge.",
+    highlights: ["Pipeline stages, follow-up dates, overdue indicators and per-application readiness.", "Requirement-to-evidence mapping with contribution notes and progress.", "No account or backend; JSON export and backup merge."],
+    techStack: ["React", "TypeScript", "Vite", "IndexedDB", "Vitest", "Vercel"],
+    metrics: [{ label: "Storage", value: "IndexedDB (local)" }, { label: "Backend", value: "None" }, { label: "Hosting", value: "Vercel" }],
+    image: `${import.meta.env.BASE_URL}projects/job-application-evidence-planner.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/Job-Application-Evidence-Planner",
+    liveUrl: "https://job-application-evidence-planner.vercel.app/",
+    architectureDiagram: "React UI ⇄ IndexedDB (browser) · explicit JSON export / merge · static hosting on Vercel",
+    systemBreakdown: { overview: "Applications are easier when every requirement has real evidence behind it.", keyChallenges: "Keeping personal data private while still allowing backups.", solutionArchitecture: "A local-first app with explicit export instead of a server.", impact: "Deployed on Vercel; the README documents verified behaviour and remaining test gaps." }
+  },
+  {
+    id: "xetech-club",
+    title: "XeTech Club Website",
+    tagline: "Single-page site for a student technology community.",
+    category: "Full-Stack Web",
+    period: 'Public repo',
+    role: "Frontend Developer",
+    summary: "React 19, TypeScript, Tailwind CSS v4 and Vite site with a DevOps/AI terminal simulator, canvas particle background, masterclass portal, project showcase and learning roadmap, deployable to GitHub Pages via Actions.",
+    highlights: ["Interactive terminal simulator and canvas neural-mesh background that respects reduced motion.", "Student project showcase and learning roadmap sections.", "GitHub Actions workflow for Pages deployment."],
+    techStack: ["React 19", "TypeScript", "Tailwind CSS v4", "Vite", "GitHub Pages"],
+    metrics: [{ label: "Framework", value: "React 19" }, { label: "Styling", value: "Tailwind v4" }, { label: "Deploy", value: "GitHub Pages" }],
+    image: `${import.meta.env.BASE_URL}projects/xetech-club.svg`,
+    githubUrl: "https://github.com/ABHILASH9519/xetech-club",
+    architectureDiagram: "Vite + React SPA → GitHub Actions → GitHub Pages",
+    systemBreakdown: { overview: "A home for a student community focused on cloud, DevOps and AI.", keyChallenges: "Making a visually rich site that stays accessible.", solutionArchitecture: "Canvas visuals gated by prefers-reduced-motion and a simple static deploy.", impact: "Community site built and maintained in the open." }
+  },
 ];
 
 export const WORK_EXPERIENCE: WorkExperience[] = [

@@ -631,17 +631,17 @@ export default function App() {
             <Reveal y={22} className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
               <div>
                 <div className="text-xs font-medium text-indigo-400 uppercase tracking-wider mb-2">
-                  Featured Case Studies & Systems
+                  Projects · Live from GitHub
                 </div>
-                <SplitHeading text={"Engineered for real-world impact."} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
+                <SplitHeading text={"Things I have built."} className="text-3xl sm:text-4xl font-bold text-white tracking-tight" />
                 <p className="text-slate-400 text-sm mt-2 max-w-xl">
-                  Deep dives into production architectures, technical challenges overcome, and measurable performance metrics.
+                  Every project here is a public repository on my GitHub. Open one to see its architecture, stack and a link to the source.
                 </p>
               </div>
 
               {/* Interactive Filter segmented control */}
               <div className="flex items-center gap-1 p-1 bg-white/[0.04] rounded-lg border border-white/10 self-start md:self-auto overflow-x-auto max-w-full">
-                {['All', 'GenAI & LLMs', 'Cloud & Distributed', 'Computer Vision', 'Full-Stack Web'].map((category) => (
+                {['All', 'Cloud & DevOps', 'AI & Agentic', 'Systems & Backend', 'Full-Stack Web'].map((category) => (
                   <button
                     key={category}
                     onClick={() => {
@@ -1049,168 +1049,168 @@ export default function App() {
                 {
                   category: '01 / Programming Languages',
                   tools: [
-                    { name: 'C', icon: 'https://cdn.simpleicons.org/c/A8B9CC' },
-                    { name: 'C++', icon: 'https://cdn.simpleicons.org/cplusplus/00599C' },
-                    { name: 'Go', icon: 'https://cdn.simpleicons.org/go/00ADD8' },
-                    { name: 'Python', icon: 'https://cdn.simpleicons.org/python/3776AB' },
-                    { name: 'Java', icon: 'https://cdn.simpleicons.org/openjdk/ED8B00' },
-                    { name: 'Kotlin', icon: 'https://cdn.simpleicons.org/kotlin/7F52FF' },
-                    { name: 'Swift', icon: 'https://cdn.simpleicons.org/swift/F05138' },
-                    { name: 'Dart', icon: 'https://cdn.simpleicons.org/dart/0175C2' },
-                    { name: 'Rust', icon: 'https://cdn.simpleicons.org/rust/FFFFFF' },
-                    { name: 'TypeScript', icon: 'https://cdn.simpleicons.org/typescript/3178C6' },
-                    { name: 'JavaScript', icon: 'https://cdn.simpleicons.org/javascript/F7DF1E' },
-                    { name: 'Bash', icon: 'https://cdn.simpleicons.org/gnubash/4EAA25' },
-                    { name: 'PowerShell', icon: 'https://cdn.simpleicons.org/powershell/5391FE' },
+                    { name: 'C', icon: `${import.meta.env.BASE_URL}icons/c.svg` },
+                    { name: 'C++', icon: `${import.meta.env.BASE_URL}icons/cplusplus.svg` },
+                    { name: 'Go', icon: `${import.meta.env.BASE_URL}icons/go.svg` },
+                    { name: 'Python', icon: `${import.meta.env.BASE_URL}icons/python.svg` },
+                    { name: 'Java', icon: `${import.meta.env.BASE_URL}icons/openjdk.svg` },
+                    { name: 'Kotlin', icon: `${import.meta.env.BASE_URL}icons/kotlin.svg` },
+                    { name: 'Swift', icon: `${import.meta.env.BASE_URL}icons/swift.svg` },
+                    { name: 'Dart', icon: `${import.meta.env.BASE_URL}icons/dart.svg` },
+                    { name: 'Rust', icon: `${import.meta.env.BASE_URL}icons/rust.svg` },
+                    { name: 'TypeScript', icon: `${import.meta.env.BASE_URL}icons/typescript.svg` },
+                    { name: 'JavaScript', icon: `${import.meta.env.BASE_URL}icons/javascript.svg` },
+                    { name: 'Bash', icon: `${import.meta.env.BASE_URL}icons/gnubash.svg` },
+                    { name: 'PowerShell', icon: `${import.meta.env.BASE_URL}icons/powershell.svg` },
                   ],
                 },
                 {
                   category: '02 / Cloud & DevOps',
                   tools: [
-                    { name: 'AWS', icon: 'https://cdn.simpleicons.org/amazonaws/FF9900' },
-                    { name: 'Azure', icon: 'https://cdn.simpleicons.org/microsoftazure/0078D4' },
-                    { name: 'Google Cloud', icon: 'https://cdn.simpleicons.org/googlecloud/4285F4' },
-                    { name: 'Docker', icon: 'https://cdn.simpleicons.org/docker/2496ED' },
-                    { name: 'Kubernetes', icon: 'https://cdn.simpleicons.org/kubernetes/326CE5' },
-                    { name: 'Terraform', icon: 'https://cdn.simpleicons.org/terraform/7B42BC' },
-                    { name: 'Jenkins', icon: 'https://cdn.simpleicons.org/jenkins/D24939' },
-                    { name: 'GitHub Actions', icon: 'https://cdn.simpleicons.org/githubactions/2088FF' },
-                    { name: 'GitLab', icon: 'https://cdn.simpleicons.org/gitlab/FC6D26' },
-                    { name: 'Ansible', icon: 'https://cdn.simpleicons.org/ansible/EE0000' },
-                    { name: 'Nginx', icon: 'https://cdn.simpleicons.org/nginx/009639' },
-                    { name: 'Cloudflare', icon: 'https://cdn.simpleicons.org/cloudflare/F38020' },
-                    { name: 'Vercel', icon: 'https://cdn.simpleicons.org/vercel/FFFFFF' },
-                    { name: 'Netlify', icon: 'https://cdn.simpleicons.org/netlify/00C7B7' },
-                    { name: 'Argo CD', icon: 'https://cdn.simpleicons.org/argo/EF7B4D' },
-                    { name: 'Helm', icon: 'https://cdn.simpleicons.org/helm/0F1689' },
-                    { name: 'Istio', icon: 'https://cdn.simpleicons.org/istio/466BB0' },
-                    { name: 'Vault', icon: 'https://cdn.simpleicons.org/vault/FFEC6E' },
-                    { name: 'Pulumi', icon: 'https://cdn.simpleicons.org/pulumi/8A3391' },
-                    { name: 'SonarQube', icon: 'https://cdn.simpleicons.org/sonarqube/4E9BCD' },
-                    { name: 'Trivy', icon: 'https://cdn.simpleicons.org/aquasecurity/1904DA' },
+                    { name: 'AWS', icon: `${import.meta.env.BASE_URL}icons/amazonaws.svg` },
+                    { name: 'Azure', icon: `${import.meta.env.BASE_URL}icons/microsoftazure.svg` },
+                    { name: 'Google Cloud', icon: `${import.meta.env.BASE_URL}icons/googlecloud.svg` },
+                    { name: 'Docker', icon: `${import.meta.env.BASE_URL}icons/docker.svg` },
+                    { name: 'Kubernetes', icon: `${import.meta.env.BASE_URL}icons/kubernetes.svg` },
+                    { name: 'Terraform', icon: `${import.meta.env.BASE_URL}icons/terraform.svg` },
+                    { name: 'Jenkins', icon: `${import.meta.env.BASE_URL}icons/jenkins.svg` },
+                    { name: 'GitHub Actions', icon: `${import.meta.env.BASE_URL}icons/githubactions.svg` },
+                    { name: 'GitLab', icon: `${import.meta.env.BASE_URL}icons/gitlab.svg` },
+                    { name: 'Ansible', icon: `${import.meta.env.BASE_URL}icons/ansible.svg` },
+                    { name: 'Nginx', icon: `${import.meta.env.BASE_URL}icons/nginx.svg` },
+                    { name: 'Cloudflare', icon: `${import.meta.env.BASE_URL}icons/cloudflare.svg` },
+                    { name: 'Vercel', icon: `${import.meta.env.BASE_URL}icons/vercel.svg` },
+                    { name: 'Netlify', icon: `${import.meta.env.BASE_URL}icons/netlify.svg` },
+                    { name: 'Argo CD', icon: `${import.meta.env.BASE_URL}icons/argo.svg` },
+                    { name: 'Helm', icon: `${import.meta.env.BASE_URL}icons/helm.svg` },
+                    { name: 'Istio', icon: `${import.meta.env.BASE_URL}icons/istio.svg` },
+                    { name: 'Vault', icon: `${import.meta.env.BASE_URL}icons/vault.svg` },
+                    { name: 'Pulumi', icon: `${import.meta.env.BASE_URL}icons/pulumi.svg` },
+                    { name: 'SonarQube', icon: `${import.meta.env.BASE_URL}icons/sonarqube.svg` },
+                    { name: 'Trivy', icon: `${import.meta.env.BASE_URL}icons/aquasecurity.svg` },
                   ],
                 },
                 {
                   category: '03 / AI, ML & Agentic AI',
                   tools: [
-                    { name: 'PyTorch', icon: 'https://cdn.simpleicons.org/pytorch/EE4C2C' },
-                    { name: 'TensorFlow', icon: 'https://cdn.simpleicons.org/tensorflow/FF6F00' },
-                    { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688' },
-                    { name: 'Flask', icon: 'https://cdn.simpleicons.org/flask/FFFFFF' },
-                    { name: 'LangChain', icon: 'https://cdn.simpleicons.org/langchain/1C3C3C' },
-                    { name: 'LangGraph', icon: 'https://cdn.simpleicons.org/langgraph/1C3C3C' },
-                    { name: 'Hugging Face', icon: 'https://cdn.simpleicons.org/huggingface/FFD21E' },
-                    { name: 'Anthropic Claude', icon: 'https://cdn.simpleicons.org/anthropic/D97757' },
-                    { name: 'MCP', icon: 'https://cdn.simpleicons.org/modelcontextprotocol/FFFFFF' },
-                    { name: 'RAG', icon: 'https://cdn.simpleicons.org/openai/FFFFFF' },
-                    { name: 'MLflow', icon: 'https://cdn.simpleicons.org/mlflow/0194E2' },
-                    { name: 'Ollama', icon: 'https://cdn.simpleicons.org/ollama/FFFFFF' },
+                    { name: 'PyTorch', icon: `${import.meta.env.BASE_URL}icons/pytorch.svg` },
+                    { name: 'TensorFlow', icon: `${import.meta.env.BASE_URL}icons/tensorflow.svg` },
+                    { name: 'FastAPI', icon: `${import.meta.env.BASE_URL}icons/fastapi.svg` },
+                    { name: 'Flask', icon: `${import.meta.env.BASE_URL}icons/flask.svg` },
+                    { name: 'LangChain', icon: `${import.meta.env.BASE_URL}icons/langchain.svg` },
+                    { name: 'LangGraph', icon: `${import.meta.env.BASE_URL}icons/langgraph.svg` },
+                    { name: 'Hugging Face', icon: `${import.meta.env.BASE_URL}icons/huggingface.svg` },
+                    { name: 'Anthropic Claude', icon: `${import.meta.env.BASE_URL}icons/anthropic.svg` },
+                    { name: 'MCP', icon: `${import.meta.env.BASE_URL}icons/modelcontextprotocol.svg` },
+                    { name: 'RAG', icon: '' },
+                    { name: 'MLflow', icon: `${import.meta.env.BASE_URL}icons/mlflow.svg` },
+                    { name: 'Ollama', icon: `${import.meta.env.BASE_URL}icons/ollama.svg` },
                   ],
                 },
                 {
                   category: '04 / Databases & Messaging',
                   tools: [
-                    { name: 'MySQL', icon: 'https://cdn.simpleicons.org/mysql/4479A1' },
-                    { name: 'PostgreSQL', icon: 'https://cdn.simpleicons.org/postgresql/4169E1' },
-                    { name: 'MongoDB', icon: 'https://cdn.simpleicons.org/mongodb/47A248' },
-                    { name: 'Redis', icon: 'https://cdn.simpleicons.org/redis/DC382D' },
-                    { name: 'Kafka', icon: 'https://cdn.simpleicons.org/apachekafka/FFFFFF' },
-                    { name: 'SQLite', icon: 'https://cdn.simpleicons.org/sqlite/003B57' },
-                    { name: 'Supabase', icon: 'https://cdn.simpleicons.org/supabase/3FCF8E' },
-                    { name: 'Firebase', icon: 'https://cdn.simpleicons.org/firebase/FFCA28' },
-                    { name: 'Elasticsearch', icon: 'https://cdn.simpleicons.org/elasticsearch/005571' },
-                    { name: 'RabbitMQ', icon: 'https://cdn.simpleicons.org/rabbitmq/FF6600' },
+                    { name: 'MySQL', icon: `${import.meta.env.BASE_URL}icons/mysql.svg` },
+                    { name: 'PostgreSQL', icon: `${import.meta.env.BASE_URL}icons/postgresql.svg` },
+                    { name: 'MongoDB', icon: `${import.meta.env.BASE_URL}icons/mongodb.svg` },
+                    { name: 'Redis', icon: `${import.meta.env.BASE_URL}icons/redis.svg` },
+                    { name: 'Kafka', icon: `${import.meta.env.BASE_URL}icons/apachekafka.svg` },
+                    { name: 'SQLite', icon: `${import.meta.env.BASE_URL}icons/sqlite.svg` },
+                    { name: 'Supabase', icon: `${import.meta.env.BASE_URL}icons/supabase.svg` },
+                    { name: 'Firebase', icon: `${import.meta.env.BASE_URL}icons/firebase.svg` },
+                    { name: 'Elasticsearch', icon: `${import.meta.env.BASE_URL}icons/elasticsearch.svg` },
+                    { name: 'RabbitMQ', icon: `${import.meta.env.BASE_URL}icons/rabbitmq.svg` },
                   ],
                 },
                 {
                   category: '05 / Backend & Web Development',
                   tools: [
-                    { name: 'Node.js', icon: 'https://cdn.simpleicons.org/nodedotjs/339933' },
-                    { name: 'Express', icon: 'https://cdn.simpleicons.org/express/FFFFFF' },
-                    { name: 'FastAPI', icon: 'https://cdn.simpleicons.org/fastapi/009688' },
-                    { name: 'Django', icon: 'https://cdn.simpleicons.org/django/092E20' },
-                    { name: 'Spring', icon: 'https://cdn.simpleicons.org/spring/6DB33F' },
-                    { name: 'GraphQL', icon: 'https://cdn.simpleicons.org/graphql/E10098' },
-                    { name: 'React', icon: 'https://cdn.simpleicons.org/react/61DAFB' },
-                    { name: 'Next.js', icon: 'https://cdn.simpleicons.org/nextdotjs/FFFFFF' },
-                    { name: 'Angular', icon: 'https://cdn.simpleicons.org/angular/DD0031' },
-                    { name: 'Vue', icon: 'https://cdn.simpleicons.org/vuedotjs/4FC08D' },
-                    { name: 'Vite', icon: 'https://cdn.simpleicons.org/vite/646CFF' },
-                    { name: 'Tailwind CSS', icon: 'https://cdn.simpleicons.org/tailwindcss/06B6D4' },
-                    { name: 'Bootstrap', icon: 'https://cdn.simpleicons.org/bootstrap/7952B3' },
-                    { name: 'HTML', icon: 'https://cdn.simpleicons.org/html5/E34F26' },
-                    { name: 'CSS', icon: 'https://cdn.simpleicons.org/css3/1572B6' },
+                    { name: 'Node.js', icon: `${import.meta.env.BASE_URL}icons/nodedotjs.svg` },
+                    { name: 'Express', icon: `${import.meta.env.BASE_URL}icons/express.svg` },
+                    { name: 'FastAPI', icon: `${import.meta.env.BASE_URL}icons/fastapi.svg` },
+                    { name: 'Django', icon: `${import.meta.env.BASE_URL}icons/django.svg` },
+                    { name: 'Spring', icon: `${import.meta.env.BASE_URL}icons/spring.svg` },
+                    { name: 'GraphQL', icon: `${import.meta.env.BASE_URL}icons/graphql.svg` },
+                    { name: 'React', icon: `${import.meta.env.BASE_URL}icons/react.svg` },
+                    { name: 'Next.js', icon: `${import.meta.env.BASE_URL}icons/nextdotjs.svg` },
+                    { name: 'Angular', icon: `${import.meta.env.BASE_URL}icons/angular.svg` },
+                    { name: 'Vue', icon: `${import.meta.env.BASE_URL}icons/vuedotjs.svg` },
+                    { name: 'Vite', icon: `${import.meta.env.BASE_URL}icons/vite.svg` },
+                    { name: 'Tailwind CSS', icon: `${import.meta.env.BASE_URL}icons/tailwindcss.svg` },
+                    { name: 'Bootstrap', icon: `${import.meta.env.BASE_URL}icons/bootstrap.svg` },
+                    { name: 'HTML', icon: `${import.meta.env.BASE_URL}icons/html5.svg` },
+                    { name: 'CSS', icon: `${import.meta.env.BASE_URL}icons/css3.svg` },
                   ],
                 },
                 {
                   category: '06 / Version Control, Build & Testing',
                   tools: [
-                    { name: 'Git', icon: 'https://cdn.simpleicons.org/git/F05032' },
-                    { name: 'GitHub', icon: 'https://cdn.simpleicons.org/github/FFFFFF' },
-                    { name: 'GitLab', icon: 'https://cdn.simpleicons.org/gitlab/FC6D26' },
-                    { name: 'Maven', icon: 'https://cdn.simpleicons.org/apachemaven/C71A36' },
-                    { name: 'Gradle', icon: 'https://cdn.simpleicons.org/gradle/02303A' },
-                    { name: 'npm', icon: 'https://cdn.simpleicons.org/npm/CB3837' },
-                    { name: 'Postman', icon: 'https://cdn.simpleicons.org/postman/FF6C37' },
-                    { name: 'Selenium', icon: 'https://cdn.simpleicons.org/selenium/43B02A' },
-                    { name: 'Jest', icon: 'https://cdn.simpleicons.org/jest/C21325' },
-                    { name: 'Pytest', icon: 'https://cdn.simpleicons.org/pytest/0A9EDC' },
+                    { name: 'Git', icon: `${import.meta.env.BASE_URL}icons/git.svg` },
+                    { name: 'GitHub', icon: `${import.meta.env.BASE_URL}icons/github.svg` },
+                    { name: 'GitLab', icon: `${import.meta.env.BASE_URL}icons/gitlab.svg` },
+                    { name: 'Maven', icon: `${import.meta.env.BASE_URL}icons/apachemaven.svg` },
+                    { name: 'Gradle', icon: `${import.meta.env.BASE_URL}icons/gradle.svg` },
+                    { name: 'npm', icon: `${import.meta.env.BASE_URL}icons/npm.svg` },
+                    { name: 'Postman', icon: `${import.meta.env.BASE_URL}icons/postman.svg` },
+                    { name: 'Selenium', icon: `${import.meta.env.BASE_URL}icons/selenium.svg` },
+                    { name: 'Jest', icon: `${import.meta.env.BASE_URL}icons/jest.svg` },
+                    { name: 'Pytest', icon: `${import.meta.env.BASE_URL}icons/pytest.svg` },
                   ],
                 },
                 {
                   category: '07 / Monitoring, IaC & Automation',
                   tools: [
-                    { name: 'Prometheus', icon: 'https://cdn.simpleicons.org/prometheus/E6522C' },
-                    { name: 'Grafana', icon: 'https://cdn.simpleicons.org/grafana/F46800' },
-                    { name: 'Terraform', icon: 'https://cdn.simpleicons.org/terraform/7B42BC' },
-                    { name: 'Ansible', icon: 'https://cdn.simpleicons.org/ansible/EE0000' },
-                    { name: 'Bash', icon: 'https://cdn.simpleicons.org/gnubash/4EAA25' },
-                    { name: 'Datadog', icon: 'https://cdn.simpleicons.org/datadog/632CA6' },
-                    { name: 'OpenTelemetry', icon: 'https://cdn.simpleicons.org/opentelemetry/FFFFFF' },
-                    { name: 'Loki', icon: 'https://cdn.simpleicons.org/grafana/F46800' },
-                    { name: 'ELK', icon: 'https://cdn.simpleicons.org/elastic/005571' },
+                    { name: 'Prometheus', icon: `${import.meta.env.BASE_URL}icons/prometheus.svg` },
+                    { name: 'Grafana', icon: `${import.meta.env.BASE_URL}icons/grafana.svg` },
+                    { name: 'Terraform', icon: `${import.meta.env.BASE_URL}icons/terraform.svg` },
+                    { name: 'Ansible', icon: `${import.meta.env.BASE_URL}icons/ansible.svg` },
+                    { name: 'Bash', icon: `${import.meta.env.BASE_URL}icons/gnubash.svg` },
+                    { name: 'Datadog', icon: `${import.meta.env.BASE_URL}icons/datadog.svg` },
+                    { name: 'OpenTelemetry', icon: `${import.meta.env.BASE_URL}icons/opentelemetry.svg` },
+                    { name: 'Loki', icon: `${import.meta.env.BASE_URL}icons/grafana.svg` },
+                    { name: 'ELK', icon: `${import.meta.env.BASE_URL}icons/elastic.svg` },
                   ],
                 },
                 {
                   category: '08 / Operating Systems & Virtualization',
                   tools: [
-                    { name: 'Linux', icon: 'https://cdn.simpleicons.org/linux/FCC624' },
-                    { name: 'Ubuntu', icon: 'https://cdn.simpleicons.org/ubuntu/E95420' },
-                    { name: 'Kali Linux', icon: 'https://cdn.simpleicons.org/kalilinux/557C94' },
-                    { name: 'Arch Linux', icon: 'https://cdn.simpleicons.org/archlinux/1793D1' },
-                    { name: 'Debian', icon: 'https://cdn.simpleicons.org/debian/A81D33' },
-                    { name: 'macOS', icon: 'https://cdn.simpleicons.org/apple/FFFFFF' },
-                    { name: 'Windows', icon: 'https://cdn.simpleicons.org/windows/0078D6' },
-                    { name: 'VMware', icon: 'https://cdn.simpleicons.org/vmware/607078' },
+                    { name: 'Linux', icon: `${import.meta.env.BASE_URL}icons/linux.svg` },
+                    { name: 'Ubuntu', icon: `${import.meta.env.BASE_URL}icons/ubuntu.svg` },
+                    { name: 'Kali Linux', icon: `${import.meta.env.BASE_URL}icons/kalilinux.svg` },
+                    { name: 'Arch Linux', icon: `${import.meta.env.BASE_URL}icons/archlinux.svg` },
+                    { name: 'Debian', icon: `${import.meta.env.BASE_URL}icons/debian.svg` },
+                    { name: 'macOS', icon: `${import.meta.env.BASE_URL}icons/apple.svg` },
+                    { name: 'Windows', icon: `${import.meta.env.BASE_URL}icons/windows.svg` },
+                    { name: 'VMware', icon: `${import.meta.env.BASE_URL}icons/vmware.svg` },
                   ],
                 },
                 {
                   category: '09 / Development Tools & Platforms',
                   tools: [
-                    { name: 'VS Code', icon: 'https://cdn.simpleicons.org/visualstudiocode/007ACC' },
-                    { name: 'IntelliJ IDEA', icon: 'https://cdn.simpleicons.org/intellijidea/FFFFFF' },
-                    { name: 'WebStorm', icon: 'https://cdn.simpleicons.org/webstorm/FFFFFF' },
-                    { name: 'Android Studio', icon: 'https://cdn.simpleicons.org/androidstudio/3DDC84' },
-                    { name: 'Flutter', icon: 'https://cdn.simpleicons.org/flutter/02569B' },
-                    { name: 'Vim', icon: 'https://cdn.simpleicons.org/vim/019733' },
-                    { name: 'Neovim', icon: 'https://cdn.simpleicons.org/neovim/57A143' },
-                    { name: 'Figma', icon: 'https://cdn.simpleicons.org/figma/F24E1E' },
-                    { name: 'MATLAB', icon: 'https://cdn.simpleicons.org/mathworks/0076A8' },
-                    { name: 'Photoshop', icon: 'https://cdn.simpleicons.org/adobephotoshop/31A8FF' },
-                    { name: 'Postman', icon: 'https://cdn.simpleicons.org/postman/FF6C37' },
-                    { name: 'Markdown', icon: 'https://cdn.simpleicons.org/markdown/FFFFFF' },
-                    { name: 'GoLand', icon: 'https://cdn.simpleicons.org/goland/FFFFFF' },
-                    { name: 'Anaconda', icon: 'https://cdn.simpleicons.org/anaconda/44A833' },
-                    { name: 'ngrok', icon: 'https://cdn.simpleicons.org/ngrok/1F1E37' },
-                    { name: 'Termius', icon: 'https://cdn.simpleicons.org/termius/FFFFFF' },
+                    { name: 'VS Code', icon: `${import.meta.env.BASE_URL}icons/visualstudiocode.svg` },
+                    { name: 'IntelliJ IDEA', icon: `${import.meta.env.BASE_URL}icons/intellijidea.svg` },
+                    { name: 'WebStorm', icon: `${import.meta.env.BASE_URL}icons/webstorm.svg` },
+                    { name: 'Android Studio', icon: `${import.meta.env.BASE_URL}icons/androidstudio.svg` },
+                    { name: 'Flutter', icon: `${import.meta.env.BASE_URL}icons/flutter.svg` },
+                    { name: 'Vim', icon: `${import.meta.env.BASE_URL}icons/vim.svg` },
+                    { name: 'Neovim', icon: `${import.meta.env.BASE_URL}icons/neovim.svg` },
+                    { name: 'Figma', icon: `${import.meta.env.BASE_URL}icons/figma.svg` },
+                    { name: 'MATLAB', icon: `${import.meta.env.BASE_URL}icons/mathworks.svg` },
+                    { name: 'Photoshop', icon: `${import.meta.env.BASE_URL}icons/adobephotoshop.svg` },
+                    { name: 'Postman', icon: `${import.meta.env.BASE_URL}icons/postman.svg` },
+                    { name: 'Markdown', icon: `${import.meta.env.BASE_URL}icons/markdown.svg` },
+                    { name: 'GoLand', icon: `${import.meta.env.BASE_URL}icons/goland.svg` },
+                    { name: 'Anaconda', icon: `${import.meta.env.BASE_URL}icons/anaconda.svg` },
+                    { name: 'ngrok', icon: `${import.meta.env.BASE_URL}icons/ngrok.svg` },
+                    { name: 'Termius', icon: `${import.meta.env.BASE_URL}icons/termius.svg` },
                   ],
                 },
                 {
                   category: '10 / Collaboration & Project Management',
                   tools: [
-                    { name: 'Atlassian', icon: 'https://cdn.simpleicons.org/atlassian/0052CC' },
-                    { name: 'Jira', icon: 'https://cdn.simpleicons.org/jira/0052CC' },
-                    { name: 'Slack', icon: 'https://cdn.simpleicons.org/slack/4A154B' },
+                    { name: 'Atlassian', icon: `${import.meta.env.BASE_URL}icons/atlassian.svg` },
+                    { name: 'Jira', icon: `${import.meta.env.BASE_URL}icons/jira.svg` },
+                    { name: 'Slack', icon: `${import.meta.env.BASE_URL}icons/slack.svg` },
                   ],
                 },
               ].map((row, rIdx) => (
@@ -1743,6 +1743,24 @@ export default function App() {
             </div>
 
             <div className="pt-4 border-t border-white/10 flex justify-end gap-3">
+              <a
+                href={selectedProject.githubUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="px-4 py-2 text-xs font-semibold text-white bg-white/10 hover:bg-white/15 border border-white/10 rounded-lg transition-colors"
+              >
+                View on GitHub
+              </a>
+              {selectedProject.liveUrl && (
+                <a
+                  href={selectedProject.liveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="px-4 py-2 text-xs font-semibold text-white bg-indigo-600 hover:bg-indigo-500 rounded-lg transition-colors"
+                >
+                  Live demo
+                </a>
+              )}
               <button
                 onClick={() => setSelectedProject(null)}
                 className="px-4 py-2 text-xs font-medium text-slate-300 hover:text-white"

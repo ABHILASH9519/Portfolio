@@ -11,7 +11,7 @@ interface TechIconProps {
 
 /** Tool tile that floats on hover, and falls back to initials if the icon CDN has no logo for it. */
 export const TechIcon: React.FC<TechIconProps> = ({ name, icon, onHover, index = 0 }) => {
-  const [failed, setFailed] = useState(false);
+  const [failed, setFailed] = useState(!icon);
   const initials = name.replace(/[^A-Za-z0-9+]/g, '').slice(0, 2);
 
   return (
