@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
 @layer base {
+  html {
+    scroll-padding-top: 72px;
+  }
+
+  ::selection {
+    background: rgba(99, 102, 241, 0.45);
+    color: #fff;
+  }
+
   :root {
     --font-display: 'Outfit', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -28,13 +37,37 @@
 }
 
 .glass-panel-hover {
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  /* never transition transform: Motion owns it on cards */
+  transition: background-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .glass-panel-hover:hover {
-  background: rgba(24, 30, 48, 0.85);
+  background-color: rgba(24, 30, 48, 0.85);
   border-color: rgba(99, 102, 241, 0.3);
-  transform: translateY(-2px);
+  box-shadow: 0 24px 60px -24px rgba(79, 70, 229, 0.35);
+}
+
+/* Cursor-following spotlight (position set from JS via --mx / --my) */
+.spotlight {
+  position: relative;
+}
+.spotlight::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(129, 140, 248, 0.16), transparent 60%);
+}
+@media (any-hover: hover), (hover: hover) {
+  .spotlight:hover::before {
+    opacity: 1;
+  }
 }
 
 /* Subtle glow effects */

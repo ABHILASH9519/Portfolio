@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'motion/react';
+import { motion, useMotionValue, useReducedMotion, useSpring, useTransform } from 'motion/react';
 
 interface Interactive3DCardProps {
   children: React.ReactNode;
@@ -13,6 +13,7 @@ export const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
   onClick
 }) => {
   const cardRef = useRef<HTMLDivElement>(null);
+  const reduceMotion = useReducedMotion();
 
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -34,8 +35,14 @@ export const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
     const xPct = mouseX / width - 0.5;
     const yPct = mouseY / height - 0.5;
 
-    x.set(xPct);
-    y.set(yPct);
+    // Spotlight follows the cursor (cheap CSS vars, no re-render)
+    cardRef.current.style.setProperty('--mx', `${mouseX}px`);
+    cardRef.current.style.setProperty('--my', `${mouseY}px`);
+
+    if (!reduceMotion) {
+      x.set(xPct);
+      y.set(yPct);
+    }
   };
 
   const handleMouseLeave = () => {
@@ -49,12 +56,22 @@ export const Interactive3DCard: React.FC<Interactive3DCardProps> = ({
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          onClick?.();
+        }
+      }}
+      whileTap={reduceMotion ? undefined : { scale: 0.985 }}
+      transition={{ type: 'spring', stiffness: 300, damping: 24 }}
       style={{
         rotateX,
         rotateY,
         transformStyle: 'preserve-3d'
       }}
-      className={`relative cursor-pointer transition-shadow will-change-transform ${className}`}
+      className={`spotlight cursor-pointer will-change-transform ${className}`}
     >
       <div style={{ transform: 'translateZ(12px)' }}>
         {children}

@@ -9,15 +9,25 @@ export const MotionBackgroundCanvas: React.FC = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    let animationFrameId: number;
-    let width = (canvas.width = window.innerWidth);
-    let height = (canvas.height = window.innerHeight);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-    const handleResize = () => {
-      if (!canvas) return;
-      width = canvas.width = window.innerWidth;
-      height = canvas.height = window.innerHeight;
+    let animationFrameId = 0;
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    const fit = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
+    fit();
+
+    const handleResize = () => fit();
 
     window.addEventListener('resize', handleResize);
 
@@ -95,9 +105,17 @@ export const MotionBackgroundCanvas: React.FC = () => {
       animationFrameId = requestAnimationFrame(render);
     };
 
+    // Don't burn frames in background tabs
+    const onVisibility = () => {
+      cancelAnimationFrame(animationFrameId);
+      if (!document.hidden) animationFrameId = requestAnimationFrame(render);
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
     render();
 
     return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('mousemove', handleMouseMove);
       cancelAnimationFrame(animationFrameId);

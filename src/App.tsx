@@ -50,6 +50,7 @@ import { AnimatedCounter } from './components/AnimatedCounter';
 import { SkillBar } from './components/SkillBar';
 import { TechIcon } from './components/TechIcon';
 import { DesktopNav, MobileMenu, useActiveSection } from './components/SiteNav';
+import { BackToTop } from './components/BackToTop';
 import { useLenis } from './components/SmoothScroll';
 
 export default function App() {
@@ -222,6 +223,7 @@ export default function App() {
       <KineticCursor />
 
       {/* Motion Scroll Progress Indicator Bar (Spring Damped) */}
+      <BackToTop />
       <motion.div
         style={{ scaleX }}
         className="fixed top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-amber-400 via-indigo-500 to-sky-400 z-[100] origin-left"
@@ -663,8 +665,8 @@ export default function App() {
             {/* Dynamic Grid of Projects */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project) => (
-                <motion.div key={project.id} layout initial={{ opacity: 0, y: 40, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }} viewport={{ once: true, margin: '0px 0px -10% 0px' }} transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }} className="h-full">
+              {filteredProjects.map((project, pIdx) => (
+                <motion.div key={project.id} layout initial={{ opacity: 0, y: 40, scale: 0.97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }} viewport={{ once: true, margin: '0px 0px -10% 0px' }} transition={{ duration: 0.75, delay: (pIdx % 2) * 0.08, ease: [0.16, 1, 0.3, 1] }} className="h-full">
                 <Interactive3DCard
                   onClick={() => {
                     soundFx.playPop();
