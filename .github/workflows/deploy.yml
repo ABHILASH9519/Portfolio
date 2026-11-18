@@ -28,6 +28,8 @@ jobs:
         run: bun run lint
       - name: Build portfolio
         run: bun run build
+        env:
+          GITHUB_PAGES: "true"
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

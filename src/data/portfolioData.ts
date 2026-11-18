@@ -113,7 +113,7 @@ export const EDUCATION_DATA: Education[] = [
     score: '97% Aggregate',
     details: 'All-round academic excellence with stellar scores in Mathematics, Science, and Information Technology.',
     highlights: [
-      'Perfect 10 CGPA equivalent with 97% overall standing.',
+      'Perfect 10 CGPA equivalent academic standing.',
       'School merit scholar and competitive coding club founder.'
     ]
   }
